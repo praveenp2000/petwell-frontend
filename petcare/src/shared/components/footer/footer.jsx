@@ -9,6 +9,7 @@ import Link from 'next/link';
 export default function Footer() {
     return (
         <div className="bg-black">
+        
             <div className="container-fluid bg-dark text-white mt-5 py-5 px-sm-3 px-md-5">
                 <div className="row pt-5">
                     <div className="col-lg-4 col-md-12 mb-5">
@@ -47,27 +48,30 @@ export default function Footer() {
                         </div>
                     </div>
                 </div>
-            </div>
-            <div className="container-fluid text-white py-4 px-sm-3 px-md-5 bg-[#111111]" >
-                <div className="row">
-                    <div className="col-md-6 text-center text-md-left mb-3 mb-md-0">
-                        <p className="m-0 text-white">
-                            &copy; <Link className="hover:!text-[#1989ce] text-white" href="/">{"PetWell"}</Link>.{"   All Rights Reserved."}
+            </div> 
+           
+  <div className="container-fluid text-white py-4 px-sm-3 px-md-5 bg-[#111111]" >
+  <div className="row">
+      <div className="col-md-6 text-center text-md-left mb-3 mb-md-0">
+          <p className="m-0 text-white">
+              &copy; <Link className="hover:!text-[#1989ce] text-white" href="/">{"PetWell"}</Link>.{"   All Rights Reserved."}
 
-                        </p>
-                    </div>
-                    <div className="col-md-6 text-center text-md-right flex">
-                        <ul className="nav d-inline-flex flex">
-                            <li className="nav-item">
-                                <Link className="nav-link text-white py-0 hover:!underline" href="/privacy-policy">Privacy</Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link text-white py-0 hover:!underline" href="/terms-and-conditions">Terms</Link>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+          </p>
+      </div>
+      <div className="col-md-6 text-center text-md-right flex">
+          <ul className="nav d-inline-flex flex">
+              <li className="nav-item">
+                  <Link className="nav-link text-white py-0 hover:!underline" href="/privacy-policy">Privacy</Link>
+              </li>
+              <li className="nav-item">
+                  <Link className="nav-link text-white py-0 hover:!underline" href="/terms-and-conditions">Terms</Link>
+              </li>
+          </ul>
+      </div>
+  </div>
+</div>
+            
+          
         </div>
     );
 }
