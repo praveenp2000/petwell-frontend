@@ -20,7 +20,7 @@ import ListItemText from '@mui/material/ListItemText';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
-import AssessmentIcon from '@mui/icons-material/Assessment';
+import SettingsIcon from '@mui/icons-material/Settings';
 
 import Link from 'next/link';
 
@@ -64,59 +64,48 @@ export default function Layout({ children }) {
 
   const links = [
     {
-      title: 'Report',
-      link: '/seller/product',
-      icon: <AssessmentIcon sx={{ color: 'white' }} />,
-    },
-    {
-      title: 'Customers',
-      link: '/admin/customers',
-      icon: <HailIcon sx={{ color: 'white' }} />,
-    },
-    {
       title: 'Bookings',
-      link: '/admin/booking',
+      link: '/customer/booking',
       icon: <AddAlarmIcon sx={{ color: 'white' }} />,
     },
     {
       title: 'Pets',
-      link: '/admin/pets',
+      link: '/customer/pets',
       icon: <PetsIcon sx={{ color: 'white' }} />,
     },
     {
       title: 'Adoptions',
-      link: '/admin/adoption',
+      link: '/customer/adoption',
       icon: <HouseIcon sx={{ color: 'white' }} />,
     },
     {
       title: 'Health',
-      link: '/admin/health',
+      link: '/customer/health',
       icon: <LocalHospitalIcon sx={{ color: 'white' }} />,
     },
-    {
-      title: 'Services',
-      link: '/admin/service',
-      icon: <CleaningServicesIcon sx={{ color: 'white' }} />,
-    },
+
     {
       title: 'Pet Services',
-      link: '/admin/petservice',
+      link: '/customer/petservice',
       icon: <SpaIcon sx={{ color: 'white' }} />,
     },
-    {
-      title: 'Products',
-      link: '/admin/product',
-      icon: <Inventory2Icon sx={{ color: 'white' }} />,
-    },
+
     {
       title: 'Purchases',
-      link: '/admin/purchase',
+      link: '/customer/purchase',
       icon: <ShopIcon sx={{ color: 'white' }} />,
     },
+
     {
-      title: 'Sellers',
-      link: '/admin/seller',
-      icon: <StorefrontIcon sx={{ color: 'white' }} />,
+      title: 'Settings',
+      link: '/customer/purchase',
+      icon: <SettingsIcon sx={{ color: 'white' }} />,
+    },
+
+    {
+      title: 'Orders',
+      link: '/customer/purchase',
+      icon: <ShopIcon sx={{ color: 'white' }} />,
     },
   ];
 
@@ -149,7 +138,7 @@ export default function Layout({ children }) {
                 color: '#ECDFCC',
               }}
             >
-              Admin Dashboard
+              Customer Dashboard
             </Typography>
           </DrawerHeader>
           <Divider />

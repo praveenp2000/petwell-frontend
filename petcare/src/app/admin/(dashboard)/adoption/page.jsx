@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 
 const Page = () => {
   const [pageSize, setPageSize] = useState(10);
-  const [currentPage, setAdoptionPage] = useState(1);
+  const [page, setPage] = useState(1);
   const [adoptionData, setAdoptionData] = useState([]);
   const [totalRecords, setTotalRecords] = useState(10);
   const [previewOpen, setPreviewOpen] = useState(false);
@@ -19,7 +19,7 @@ const Page = () => {
 
   const payload = {
     page_size: pageSize,
-    current_page: currentPage,
+    current_page: page,
   };
 
   useEffect(() => {
@@ -40,13 +40,13 @@ const Page = () => {
       }
     };
     storeAdoption();
-  }, [pageSize, currentPage]);
+  }, [pageSize, page]);
 
   if (adoptionData.length === 0) return <LoadingScreen />;
 
   const handleChange = (event, value) => {
     console.log('lol', value);
-    setAdoptionPage(value);
+    setPage(value);
   };
 
   return (
@@ -127,7 +127,7 @@ const Page = () => {
         <div className='mt-2 mb-2'>
           <Pagination
             count={totalRecords / pageSize}
-            page={currentPage}
+            page={page}
             size='small'
             onChange={handleChange}
           />

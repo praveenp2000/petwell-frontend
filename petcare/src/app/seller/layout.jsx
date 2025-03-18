@@ -1,14 +1,5 @@
 'use client';
-import AddAlarmIcon from '@mui/icons-material/AddAlarm';
-import CleaningServicesIcon from '@mui/icons-material/CleaningServices';
-import HailIcon from '@mui/icons-material/Hail';
-import HouseIcon from '@mui/icons-material/House';
 import Inventory2Icon from '@mui/icons-material/Inventory2';
-import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
-import PetsIcon from '@mui/icons-material/Pets';
-import ShopIcon from '@mui/icons-material/Shop';
-import SpaIcon from '@mui/icons-material/Spa';
-import StorefrontIcon from '@mui/icons-material/Storefront';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
@@ -21,6 +12,7 @@ import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import AssessmentIcon from '@mui/icons-material/Assessment';
+import SettingsIcon from '@mui/icons-material/Settings';
 
 import Link from 'next/link';
 
@@ -69,54 +61,14 @@ export default function Layout({ children }) {
       icon: <AssessmentIcon sx={{ color: 'white' }} />,
     },
     {
-      title: 'Customers',
-      link: '/admin/customers',
-      icon: <HailIcon sx={{ color: 'white' }} />,
-    },
-    {
-      title: 'Bookings',
-      link: '/admin/booking',
-      icon: <AddAlarmIcon sx={{ color: 'white' }} />,
-    },
-    {
-      title: 'Pets',
-      link: '/admin/pets',
-      icon: <PetsIcon sx={{ color: 'white' }} />,
-    },
-    {
-      title: 'Adoptions',
-      link: '/admin/adoption',
-      icon: <HouseIcon sx={{ color: 'white' }} />,
-    },
-    {
-      title: 'Health',
-      link: '/admin/health',
-      icon: <LocalHospitalIcon sx={{ color: 'white' }} />,
-    },
-    {
-      title: 'Services',
-      link: '/admin/service',
-      icon: <CleaningServicesIcon sx={{ color: 'white' }} />,
-    },
-    {
-      title: 'Pet Services',
-      link: '/admin/petservice',
-      icon: <SpaIcon sx={{ color: 'white' }} />,
-    },
-    {
       title: 'Products',
-      link: '/admin/product',
+      link: '/seller/product',
       icon: <Inventory2Icon sx={{ color: 'white' }} />,
     },
     {
-      title: 'Purchases',
-      link: '/admin/purchase',
-      icon: <ShopIcon sx={{ color: 'white' }} />,
-    },
-    {
-      title: 'Sellers',
-      link: '/admin/seller',
-      icon: <StorefrontIcon sx={{ color: 'white' }} />,
+      title: 'Settings',
+      link: '/customer/purchase',
+      icon: <SettingsIcon sx={{ color: 'white' }} />,
     },
   ];
 
@@ -131,7 +83,7 @@ export default function Layout({ children }) {
               width: drawerWidth,
               boxSizing: 'border-box',
               mt: 10.9,
-              height: 'auto',
+              height: `calc(100vh - 10.9 )px`,
               backgroundColor: '#1c1b1f',
               borderRight: '2px solid white',
             },
@@ -149,7 +101,7 @@ export default function Layout({ children }) {
                 color: '#ECDFCC',
               }}
             >
-              Admin Dashboard
+              Seller Dashboard
             </Typography>
           </DrawerHeader>
           <Divider />
