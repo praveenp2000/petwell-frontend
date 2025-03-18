@@ -22,11 +22,13 @@ const Page = () => {
     current_page: currentPage,
   };
 
+  const seller_id = 1;
+
   useEffect(() => {
     const storeAdoption = async () => {
       try {
         const response = await axios.post(
-          'http://127.0.0.1:8000/getallproduct/',
+          'http://127.0.0.1:8000/getproductbysellerid/' + seller_id,
           payload
         );
         console.log('✅ Customer saved successfully:', response.data);
@@ -80,7 +82,7 @@ const Page = () => {
             </tr>
           </thead>
           <tbody>
-            {productData.data.map((data, index) => (
+            {productData.data?.map((data, index) => (
               <tr key={index}>
                 <td>{index + 1}</td>
                 <td>{data.name}</td>

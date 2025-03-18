@@ -1,3 +1,5 @@
+'use client'
+
 import {
   Backdrop,
   Box,
@@ -9,7 +11,12 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import React from 'react';
+import axios from 'axios';
+import React, { useState } from 'react';
+import { useEffect } from 'react';
+import { useRouter } from "next/navigation";
+import Alert from '@mui/material/Alert';
+
 
 const style = {
   position: 'absolute',
@@ -25,97 +32,208 @@ const style = {
 };
 
 const Login = (_props) => {
+
+  const [userType, setUserType] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [apiUrl, setApiUrl] = useState('');
+  const [navigationUrl, setNavigationUrl] = useState('');
+  const [loginData, setLoginData] = useState('');
+  const [showAlert, setShowAlert] = useState(false);
+  const [status, setStatus] = useState(0);
+  const router = useRouter();
+
+  useEffect(() => {
+    setTimeout(() => {
+      setShowAlert(false);
+      setStatus(0);
+    }, 5000);
+  }, [showAlert]);
+
+  useEffect(() => {
+    if (userType === 'Doctor') {
+      setApiUrl('http://127.0.0.1:8000/doctorlogin/');
+      setNavigationUrl('/doctor/booking');
+    }
+
+    if (userType === 'Seller') {
+      setApiUrl('http://127.0.0.1:8000/sellerlogin/');
+      setNavigationUrl('/seller/report');
+    }
+
+    if (userType === 'Customer') {
+      setApiUrl('http://127.0.0.1:8000/customerlogin/');
+      setNavigationUrl('/customer/booking');
+    }
+
+    if (userType === 'Admin') {
+      setApiUrl('http://127.0.0.1:8000/adminlogin/');
+      setNavigationUrl('/admin/report');
+    }
+
+  }, [userType]);
+
+  const payload = { email: email, password: password }
+
+  const submitData = async () => {
+    try {
+      const response = await axios.post(
+        apiUrl,
+        payload
+      );
+      setLoginData(response.data);
+      if (response.data.message === 'Login successfull') {
+        setStatus(1);
+        _props.handleClose();
+        router.push(navigationUrl);
+      }
+
+      else {
+        setStatus(2);
+        setShowAlert(true);
+      }
+    }
+    catch (error) {
+      setStatus(0);
+      setShowAlert(false);
+      console.error(
+        '❌ Error saving adoption:',
+        error.response ? error.response.data : error.message
+      );
+    }
+  };
+
+
+
+
+
   return (
-    <Modal
-      aria-labelledby='transition-modal-title'
-      aria-describedby='transition-modal-description'
-      open={_props.open}
-      onClose={_props.handleClose}
-      closeAfterTransition
-      slots={{ backdrop: Backdrop }}
-      slotProps={{
-        backdrop: {
-          timeout: 500,
-        },
-      }}
-    >
-      <Fade in={_props.open}>
-        <Box sx={style}>
-          <Typography
-            id='transition-modal-title'
-            sx={{
-              fontSize: 22,
-              mb: 4,
-              fontFamily: 'Poppins',
-              fontWeight: 600,
-              color: 'black',
-              textAlign: 'center',
-            }}
-          >
-            {'Login '}
-          </Typography>
 
-          <Box
-            sx={{
-              mt: 2,
-              display: 'grid',
-              gridTemplateColumns: 'repeat(2, 1fr)',
-            }}
-          >
+    <>
+      <Modal
+        aria-labelledby='transition-modal-title'
+        aria-describedby='transition-modal-description'
+        open={_props.open}
+        onClose={_props.handleClose}
+        closeAfterTransition
+        slots={{ backdrop: Backdrop }}
+        slotProps={{
+          backdrop: {
+            timeout: 500,
+          },
+        }}
+      >
+        <Fade in={_props.open}>
+          <Box sx={style}>
             <Typography
-              id='transition-modal-description'
-              sx={{ fontFamily: 'Poppins', color: '#393646', my: 'auto' }}
+              id='transition-modal-title'
+              sx={{
+                fontSize: 22,
+                mb: 4,
+                fontFamily: 'Poppins',
+                fontWeight: 600,
+                color: 'black',
+                textAlign: 'center',
+              }}
             >
-              <strong className='capitalize'>Email</strong>
+              {'Login '}
             </Typography>
 
-            <TextField
-              sx={{ my: 'auto' }}
-              id='standard-basic'
-              type='email'
-              defaultValue={'email'}
-              variant='outlined'
-              size='small'
-            />
-          </Box>
+            <div className='w-full mb-4'>
+              <select
+                onChange={(event) => setUserType(event.target.value)}
+                value={userType}
+                className='z-10 cursor-pointer block w-full px-2 py-2 shadow-sm focus:ring-blue-500 focus:border-blue-500'
+              >
+                <option value={'Customer'}>{'Customer'}</option>
+                <option value={'Seller'}>{'Seller'}</option>
+                <option value={'Doctor'}>{'Doctor'}</option>
+                <option value={'Admin'}>{'Admin'}</option>
+              </select>
+            </div>
 
-          <Box
-            sx={{
-              mt: 2,
-              display: 'grid',
-              gridTemplateColumns: 'repeat(2, 1fr)',
-            }}
-          >
-            <Typography
-              id='transition-modal-description'
-              sx={{ fontFamily: 'Poppins', color: '#393646', my: 'auto' }}
+            <Box
+              sx={{
+                mt: 2,
+                display: 'grid',
+                gridTemplateColumns: 'repeat(2, 1fr)',
+              }}
             >
-              <strong className='capitalize'>Password</strong>
-            </Typography>
+              <Typography
+                id='transition-modal-description'
+                sx={{ fontFamily: 'Poppins', color: '#393646', my: 'auto' }}
+              >
+                <strong className='capitalize'>Email</strong>
+              </Typography>
 
-            <TextField
-              sx={{ my: 'auto' }}
-              type='password'
-              id='standard-basic'
-              defaultValue={'email'}
-              variant='outlined'
-              size='small'
-            />
+              <TextField
+                sx={{ my: 'auto' }}
+                id='email'
+                type='email'
+                defaultValue={email}
+                onChange={(event) => { setEmail(event.target.value) }}
+                variant='outlined'
+                size='small'
+              />
+            </Box>
+
+            <Box
+              sx={{
+                mt: 2,
+                display: 'grid',
+                gridTemplateColumns: 'repeat(2, 1fr)',
+              }}
+            >
+              <Typography
+                id='transition-modal-description'
+                sx={{ fontFamily: 'Poppins', color: '#393646', my: 'auto' }}
+              >
+                <strong className='capitalize'>Password</strong>
+              </Typography>
+
+              <TextField
+                sx={{ my: 'auto' }}
+                type='password'
+                id='password'
+                onChange={(event) => { setPassword(event.target.value) }}
+                defaultValue={password}
+                variant='outlined'
+                size='small'
+              />
+            </Box>
+
+            <Divider sx={{ my: 2 }} />
+
+            <Box sx={{ display: 'flex', columnGap: 3, justifyContent: 'end' }}>
+              <Button variant='outlined' onClick={_props.handleClose}>
+                Cancel
+              </Button>
+              <Button variant='contained' onClick={() => submitData()}>
+                Login
+              </Button>
+            </Box>
+
+            <Box sx={{ pt: 4, pb: 4 }}>
+              {showAlert && status === 2 && (
+                <Alert variant="filled" severity="error">
+                  {loginData.message}
+                </Alert>
+              )}
+            </Box>
           </Box>
+        </Fade>
+      </Modal>
 
-          <Divider sx={{ my: 2 }} />
-
-          <Box sx={{ display: 'flex', columnGap: 3, justifyContent: 'end' }}>
-            <Button variant='outlined' onClick={_props.handleClose}>
-              Cancel
-            </Button>
-            <Button variant='contained' onClick={() => submitData()}>
-              Login
-            </Button>
-          </Box>
+      {/* {showAlert && status && (
+        <Box sx={{ display: 'fixed', zIndex: 5000 }}>
+          <Alert variant="filled" severity="success">
+            {loginData.message}
+          </Alert>
         </Box>
-      </Fade>
-    </Modal>
+      )
+      } */}
+
+    </>
   );
 };
 

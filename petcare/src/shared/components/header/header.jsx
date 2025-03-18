@@ -38,9 +38,8 @@ export default function Header(_props) {
         )}
 
         <div
-          className={`'container-fluid p-0' ${
-            _props.hideLayout ? '!fixed w-full mb-4' : ''
-          }`}
+          className={`'container-fluid p-0' ${_props.hideLayout ? '!fixed w-full mb-4' : ''
+            }`}
         >
           <div className='bg-dark h-[87px] pt-4'>
             <nav className='py-lg-0 px-lg-5'>
@@ -51,6 +50,12 @@ export default function Header(_props) {
                     className='nav-item nav-link active !text-white hover:bg-[#1989ce]'
                   >
                     Home
+                  </Link>
+                  <Link
+                    href='/products'
+                    className='nav-item nav-link !text-white hover:bg-[#1989ce]'
+                  >
+                    Our Products
                   </Link>
                   <Link
                     href='/about-us'
