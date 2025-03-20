@@ -3,10 +3,27 @@ import Link from 'next/link';
 import { useState } from 'react';
 import Register from '../Modal/Register';
 import Login from '../Modal/Login';
+import { useGlobalState } from '../globalState/GlobalStateProvider';
+import { useRouter } from 'next/navigation';
 
 export default function Header(_props) {
   const [openRegister, setOpenRegister] = useState(false);
   const [openLogin, setOpenLogin] = useState(false);
+  const { user, setUser } = useGlobalState();
+  console.log('user', user);
+  const storedUser = sessionStorage.getItem("user");
+  const router = useRouter();
+
+  const loggedIn = typeof user?.name != 'undefined' || storedUser;
+  const userData = JSON.parse(storedUser);
+  console.log('userD', userData);
+
+  const navigate = () => {
+    if (typeof userData?.aid != 'undefined') return '/admin/report';
+    if (typeof userData?.cid != 'undefined') return '/customer/booking';
+    if (typeof userData?.sid != 'undefined') return '/seller/report';
+    if (typeof userData?.doctorid != 'undefined') return '/doctor/health';
+  }
 
   return (
     <>
@@ -43,8 +60,8 @@ export default function Header(_props) {
         >
           <div className='bg-dark h-[87px] pt-4'>
             <nav className='py-lg-0 px-lg-5'>
-              <div className=' px-3 flex'>
-                <div className='mr-auto py-0 flex justify-between'>
+              <div className=' px-3 flex justify-between'>
+                <div className='mr-auto py-0 flex justify-end'>
                   <Link
                     href='/'
                     className='nav-item nav-link active !text-white hover:bg-[#1989ce]'
@@ -77,18 +94,43 @@ export default function Header(_props) {
                   </Link>
                 </div>
                 <div className='mr-auto py-0 flex'>
-                  <div
-                    className='nav-item nav-link !text-white hover:bg-[#1989ce] hover:cursor-pointer'
-                    onClick={() => setOpenLogin(true)}
-                  >
-                    Sign In
-                  </div>
-                  <div
-                    className='nav-item nav-link !text-white hover:bg-[#1989ce] hover:cursor-pointer'
-                    onClick={() => setOpenRegister(true)}
-                  >
-                    Register
-                  </div>
+                  {loggedIn ? (
+                    <>
+                      <Link
+                        href={navigate()}
+                        className='nav-item nav-link !text-white hover:bg-[#1989ce] cursor-pointer'
+                      >
+                        Dashboard
+                      </Link>
+
+                      <div
+                        className='nav-item nav-link !text-white hover:bg-[#1989ce] cursor-pointer'
+                        onClick={() => {
+                          setUser([]);
+                          sessionStorage.clear();
+                          router.push('/');
+                        }}
+                      >
+                        Logout
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div
+                        className='nav-item nav-link !text-white hover:bg-[#1989ce] hover:cursor-pointer'
+                        onClick={() => setOpenLogin(true)}
+                      >
+                        Sign In
+                      </div>
+                      <div
+                        className='nav-item nav-link !text-white hover:bg-[#1989ce] hover:cursor-pointer'
+                        onClick={() => setOpenRegister(true)}
+                      >
+                        Register
+                      </div>
+                    </>
+                  )}
+
                 </div>
               </div>
             </nav>

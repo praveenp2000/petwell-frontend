@@ -12,8 +12,6 @@ import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import AssessmentIcon from '@mui/icons-material/Assessment';
-import SettingsIcon from '@mui/icons-material/Settings';
-
 import Link from 'next/link';
 
 const drawerWidth = 240;
@@ -57,18 +55,13 @@ export default function Layout({ children }) {
   const links = [
     {
       title: 'Report',
-      link: '/seller/product',
+      link: '/seller/report',
       icon: <AssessmentIcon sx={{ color: 'white' }} />,
     },
     {
       title: 'Products',
       link: '/seller/product',
       icon: <Inventory2Icon sx={{ color: 'white' }} />,
-    },
-    {
-      title: 'Settings',
-      link: '/customer/purchase',
-      icon: <SettingsIcon sx={{ color: 'white' }} />,
     },
   ];
 

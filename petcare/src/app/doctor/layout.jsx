@@ -96,7 +96,7 @@ export default function Layout({ children }) {
               width: drawerWidth,
               boxSizing: 'border-box',
               mt: 10.9,
-              height: 'auto',
+              height: `calc(100vh - 10.9 )px`,
               backgroundColor: '#1c1b1f',
               borderRight: '2px solid white',
             },

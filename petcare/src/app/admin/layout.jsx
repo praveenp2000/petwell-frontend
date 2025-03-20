@@ -65,7 +65,7 @@ export default function Layout({ children }) {
   const links = [
     {
       title: 'Report',
-      link: '/seller/product',
+      link: '/admin/report',
       icon: <AssessmentIcon sx={{ color: 'white' }} />,
     },
     {

@@ -16,6 +16,7 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { useRouter } from "next/navigation";
 import Alert from '@mui/material/Alert';
+import { useGlobalState } from '../globalState/GlobalStateProvider';
 
 
 const style = {
@@ -41,6 +42,7 @@ const Login = (_props) => {
   const [loginData, setLoginData] = useState('');
   const [showAlert, setShowAlert] = useState(false);
   const [status, setStatus] = useState(0);
+  const { user, setUser } = useGlobalState();
   const router = useRouter();
 
   useEffect(() => {
@@ -84,6 +86,8 @@ const Login = (_props) => {
       setLoginData(response.data);
       if (response.data.message === 'Login successfull') {
         setStatus(1);
+        setUser(response.data.data);
+        sessionStorage.setItem("user", JSON.stringify(response.data.data));
         _props.handleClose();
         router.push(navigationUrl);
       }

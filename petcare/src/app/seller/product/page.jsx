@@ -7,6 +7,8 @@ import Pagination from '@mui/material/Pagination';
 import LoadingScreen from '@/shared/components/LoadingScreen/LoadingScreen';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { Button } from '@mui/material';
+import { AddForms } from '@/shared/components/Modal/AddForms';
 
 const Page = () => {
   const [pageSize, setPageSize] = useState(10);
@@ -16,13 +18,17 @@ const Page = () => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const [previewData, setPreviewData] = useState([]);
+  const [openForm, setOpenForm] = useState(false);
+  const storedUser = sessionStorage.getItem("user");
+  const userData = JSON.parse(storedUser);
 
   const payload = {
     page_size: pageSize,
     current_page: currentPage,
   };
 
-  const seller_id = 1;
+  const seller_id = userData.sid;
+  console.log('lool', userData);
 
   useEffect(() => {
     const storeAdoption = async () => {
@@ -55,6 +61,7 @@ const Page = () => {
     <>
       <div className='flex justify-between my-auto font-[Poppins] w-full'>
         <h4 className='text-center text-[#ECDFCC]'>Product List</h4>
+        <Button sx={{ height: 36, textTransform: 'capitalize' }} variant='contained' onClick={() => setOpenForm(true)}>Add Product</Button>
         <div className='text-center justify-center'>
           <div className='w-20 mb-4'>
             <select
@@ -77,7 +84,8 @@ const Page = () => {
               <th>No</th>
               <th className='w-[250px]'>Name</th>
               <th>Price</th>
-              <th className='w-[250px]'>Quantity</th>
+              <th>Quantity</th>
+              <th className='w-[250px]'>Image</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -88,6 +96,7 @@ const Page = () => {
                 <td>{data.name}</td>
                 <td>{data.price}</td>
                 <td>{data.quantity}</td>
+                <td><img src={`http://127.0.0.1:8000${data.image}`} /></td>
                 <td className='flex gap-x-2 h-[73.5px] py-auto'>
                   <EditIcon
                     sx={{
@@ -153,6 +162,8 @@ const Page = () => {
           />
         )}
       </div>
+
+      <AddForms open={openForm} handleClose={() => setOpenForm(false)} formType='product' />
     </>
   );
 };

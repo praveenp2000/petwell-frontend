@@ -49,12 +49,25 @@ export const PreviewModal = (_props) => {
           </Typography>
 
           {Object.entries(_props.data).map(([key, value], index) => (
-            <div key={index}>
+
+            <div key={index} className='w-full'>
+
+              {key === 'image' && (
+                <div className='w-full justify-center mt-10'>
+                  <img className='w-[90px] h-[90px]' src={`http://127.0.0.1:8000${value}`} />
+                </div>
+              )}
+
               <Typography
                 id='transition-modal-description'
                 sx={{ mt: 2, fontFamily: 'Poppins', color: '#393646' }}
               >
-                <strong className='capitalize'>{key}:</strong> {value}
+                {key !== 'image' && (
+                  <>
+                    <strong className='capitalize'>{key}:  </strong>{value}
+                  </>
+                )}
+
               </Typography>
             </div>
           ))}

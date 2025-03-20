@@ -102,11 +102,7 @@ export default function Layout({ children }) {
       icon: <SettingsIcon sx={{ color: 'white' }} />,
     },
 
-    {
-      title: 'Orders',
-      link: '/customer/purchase',
-      icon: <ShopIcon sx={{ color: 'white' }} />,
-    },
+
   ];
 
   return (
@@ -120,7 +116,7 @@ export default function Layout({ children }) {
               width: drawerWidth,
               boxSizing: 'border-box',
               mt: 10.9,
-              height: 'auto',
+              height: `calc(100vh - 10.9 )px`,
               backgroundColor: '#1c1b1f',
               borderRight: '2px solid white',
             },
