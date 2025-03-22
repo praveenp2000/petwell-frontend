@@ -1,3 +1,4 @@
+'use client';
 import MapsHomeWorkIcon from '@mui/icons-material/MapsHomeWork';
 import FastfoodIcon from '@mui/icons-material/Fastfood';
 import FaceRetouchingNaturalIcon from '@mui/icons-material/FaceRetouchingNatural';
