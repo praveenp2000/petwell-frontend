@@ -4,7 +4,7 @@ import React from 'react';
 const Page = () => {
   return (
     <div>
-      <Report />
+      <Report type='admin' />
     </div>
   );
 };
