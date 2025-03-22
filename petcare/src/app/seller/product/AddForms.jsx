@@ -10,8 +10,6 @@ import {
   Typography,
 } from '@mui/material';
 import { useState } from 'react';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import { styled } from '@mui/material/styles';
 
 const style = {
   position: 'absolute',
@@ -26,21 +24,13 @@ const style = {
   p: 4,
 };
 
-const VisuallyHiddenInput = styled('input')({
-  clip: 'rect(0 0 0 0)',
-  clipPath: 'inset(50%)',
-  height: 1,
-  overflow: 'hidden',
-  position: 'absolute',
-  bottom: 0,
-  left: 0,
-  whiteSpace: 'nowrap',
-  width: 1,
-});
+export const AddForms = ({ open, handleClose }) => {
+  const storedUser = sessionStorage.getItem('user');
+  const userData = JSON.parse(storedUser || '{}');
+  const seller_id = userData.sid || '';
 
-export const AddForms = (_props) => {
   const [payLoad, setPayLoad] = useState({
-    seller_id: '',
+    seller_id: seller_id,
     name: '',
     price: '',
     quantity: '',
@@ -48,28 +38,59 @@ export const AddForms = (_props) => {
     producttype: '',
     rating: 4,
     approved: false,
-    image: '',
+    image: null,
   });
-  const [selectedImage, setSelectedImage] = useState(null);
-  const handleImageChange = (event) => {
-    setSelectedImage(event.target.files[0]); // Store the selected file
+
+  const handleChange = (e) => {
+    const { name, value, type, files } = e.target;
+
+    setPayLoad((prev) => ({
+      ...prev,
+      [name]: type === 'file' ? files[0] : value,
+    }));
   };
 
-  // addproduct/
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  const handleChange = (field, value) => {
-    setPayLoad((prevData) => ({
-      ...prevData,
-      [field]: value,
-    }));
+    const formData = new FormData();
+    Object.entries(payLoad).forEach(([key, value]) => {
+      formData.append(key, value);
+    });
+
+    try {
+      const response = await fetch('http://127.0.0.1:8000/addproduct/', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        alert('Product added successfully!');
+        setPayLoad((prev) => ({
+          ...prev,
+          name: '',
+          price: '',
+          quantity: '',
+          animal: '',
+          producttype: '',
+          image: null,
+        }));
+        handleClose();
+      } else {
+        const errorData = await response.json();
+        alert('Error: ' + JSON.stringify(errorData));
+      }
+    } catch (error) {
+      alert('Network error: ' + error.message);
+    }
   };
 
   return (
     <Modal
       aria-labelledby='transition-modal-title'
       aria-describedby='transition-modal-description'
-      open={_props.open}
-      onClose={_props.handleClose}
+      open={open}
+      onClose={handleClose}
       closeAfterTransition
       slots={{ backdrop: Backdrop }}
       slotProps={{
@@ -78,182 +99,46 @@ export const AddForms = (_props) => {
         },
       }}
     >
-      <Fade in={_props.open}>
-        <Box sx={style}>
+      <Fade in={open}>
+        <Box sx={style} component='form' onSubmit={handleSubmit}>
           <Typography
             id='transition-modal-title'
-            sx={{
-              fontSize: 22,
-              mb: 4,
-              fontFamily: 'Poppins',
-              fontWeight: 600,
-              color: 'black',
-              textAlign: 'center',
-            }}
+            sx={{ fontSize: 22, mb: 4, fontFamily: 'Poppins', fontWeight: 600, color: 'black', textAlign: 'center' }}
           >
-            {'Add Products'}
+            Add Products
           </Typography>
 
-          <Box
-            sx={{
-              mt: 2,
-              display: 'grid',
-              gridTemplateColumns: 'repeat(2, 1fr)',
-            }}
-          >
-            <Typography
-              id='transition-modal-description'
-              sx={{ fontFamily: 'Poppins', color: '#393646', my: 'auto' }}
-            >
-              <strong className='capitalize'>Product Name</strong>
-            </Typography>
+          {['name', 'price', 'quantity', 'animal', 'producttype'].map((field) => (
+            <Box key={field} sx={{ mt: 2, display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
+              <Typography sx={{ fontFamily: 'Poppins', color: '#393646', my: 'auto' }}>
+                <strong className='capitalize'>{field}</strong>
+              </Typography>
+              <TextField
+                sx={{ my: 'auto' }}
+                name={field}
+                value={payLoad[field]}
+                onChange={handleChange}
+                variant='outlined'
+                size='small'
+                type={field === 'price' || field === 'quantity' ? 'number' : 'text'}
+              />
+            </Box>
+          ))}
 
-            <TextField
-              sx={{ my: 'auto' }}
-              id='standard-basic'
-              defaultValue={payLoad.name}
-              onChange={(e) => handleChange('name', e.target.value)}
-              variant='outlined'
-              size='small'
-            />
-          </Box>
-
-          <Box
-            sx={{
-              mt: 2,
-              display: 'grid',
-              gridTemplateColumns: 'repeat(2, 1fr)',
-            }}
-          >
-            <Typography
-              id='transition-modal-description'
-              sx={{ fontFamily: 'Poppins', color: '#393646', my: 'auto' }}
-            >
-              <strong className='capitalize'>Price</strong>
-            </Typography>
-
-            <TextField
-              sx={{ my: 'auto' }}
-              id='standard-basic'
-              type='email'
-              defaultValue={payLoad.price}
-              onChange={(e) => handleChange('price', e.target.value)}
-              variant='outlined'
-              size='small'
-            />
-          </Box>
-
-          <Box
-            sx={{
-              mt: 2,
-              display: 'grid',
-              gridTemplateColumns: 'repeat(2, 1fr)',
-            }}
-          >
-            <Typography
-              id='transition-modal-description'
-              sx={{ fontFamily: 'Poppins', color: '#393646', my: 'auto' }}
-            >
-              <strong className='capitalize'>Quantity</strong>
-            </Typography>
-
-            <TextField
-              sx={{ my: 'auto' }}
-              id='standard-basic'
-              type='phone'
-              defaultValue={payLoad.quantity}
-              onChange={(e) => handleChange('quantity', e.target.value)}
-              variant='outlined'
-              size='small'
-            />
-          </Box>
-
-          <Box
-            sx={{
-              mt: 2,
-              display: 'grid',
-              gridTemplateColumns: 'repeat(2, 1fr)',
-            }}
-          >
-            <Typography
-              id='transition-modal-description'
-              sx={{ fontFamily: 'Poppins', color: '#393646', my: 'auto' }}
-            >
-              <strong className='capitalize'>Animal</strong>
-            </Typography>
-
-            <TextField
-              sx={{ my: 'auto' }}
-              type='password'
-              id='standard-basic'
-              defaultValue={payLoad.animal}
-              onChange={(e) => handleChange('animal', e.target.value)}
-              variant='outlined'
-              size='small'
-            />
-          </Box>
-
-          <Box
-            sx={{
-              mt: 2,
-              display: 'grid',
-              gridTemplateColumns: 'repeat(2, 1fr)',
-            }}
-          >
-            <Typography
-              id='transition-modal-description'
-              sx={{ fontFamily: 'Poppins', color: '#393646', my: 'auto' }}
-            >
-              <strong className='capitalize'> Product Type</strong>
-            </Typography>
-
-            <TextField
-              sx={{ my: 'auto' }}
-              type='password'
-              id='standard-basic'
-              defaultValue={payLoad.producttype}
-              onChange={(e) => handleChange('producttype', e.target.value)}
-              variant='outlined'
-              size='small'
-            />
-          </Box>
-
-          <Box
-            sx={{
-              mt: 2,
-              display: 'grid',
-              gridTemplateColumns: 'repeat(2, 1fr)',
-            }}
-          >
-            <Typography
-              id='transition-modal-description'
-              sx={{ fontFamily: 'Poppins', color: '#393646', my: 'auto' }}
-            >
+          <Box sx={{ mt: 2, display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
+            <Typography sx={{ fontFamily: 'Poppins', color: '#393646', my: 'auto' }}>
               <strong className='capitalize'>Image</strong>
             </Typography>
-
-            <Button
-              component='label'
-              variant='contained'
-              tabIndex={-1}
-              startIcon={<CloudUploadIcon />}
-            >
-              Upload files
-              <VisuallyHiddenInput
-                type='file'
-                onChange={(event) => console.log(event.target.files)}
-                multiple
-              />
-            </Button>
+            <input type='file' name='image' id='image' onChange={handleChange} required />
           </Box>
 
           <Divider sx={{ my: 2 }} />
 
           <Box sx={{ display: 'flex', columnGap: 3, justifyContent: 'end' }}>
-            <Button variant='outlined' onClick={_props.handleClose}>
+            <Button variant='outlined' onClick={handleClose}>
               Cancel
             </Button>
-            <Button variant='contained' onClick={() => submitData()}>
+            <Button variant='contained' type='submit'>
               Save
             </Button>
           </Box>

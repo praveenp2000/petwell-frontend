@@ -64,7 +64,7 @@ export const PreviewModal = (_props) => {
               >
                 {key !== 'image' && (
                   <>
-                    <strong className='capitalize'>{key}:  </strong>{value}
+                    <strong className='capitalize'>{key}:  </strong>{key === 'approved' ? value ? "Yes" : "No" : value}
                   </>
                 )}
 

@@ -27,7 +27,7 @@ export default function Header(_props) {
 
   return (
     <>
-      <div className='z-40'>
+      <div className='z-[4000] relative'>
         {!_props.hideLayout && (
           <div className='flex py-3 px-lg-5'>
             <div className='col-lg-4'>

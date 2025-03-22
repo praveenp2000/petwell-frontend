@@ -62,7 +62,7 @@ const Page = () => {
       <div className='flex justify-between my-auto font-[Poppins] w-full'>
         <h4 className='text-center text-[#ECDFCC]'>Product List</h4>
         <Button
-          sx={{ height: 36, textTransform: 'capitalize' }}
+          sx={{ height: 36, textTransform: 'capitalize', }}
           variant='contained'
           onClick={() => setOpenForm(true)}
         >
@@ -91,7 +91,6 @@ const Page = () => {
               <th className='w-[250px]'>Name</th>
               <th>Price</th>
               <th>Quantity</th>
-              <th className='w-[250px]'>Image</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -102,11 +101,8 @@ const Page = () => {
                 <td>{data.name}</td>
                 <td>{data.price}</td>
                 <td>{data.quantity}</td>
-                <td>
-                  <img src={`http://127.0.0.1:8000${data.image}`} />
-                </td>
                 <td className='flex gap-x-2 h-[73.5px] py-auto'>
-                  <EditIcon
+                  {/* <EditIcon
                     sx={{
                       height: 20,
                       width: 20,
@@ -121,7 +117,7 @@ const Page = () => {
                       setPreviewData(data);
                       setEditOpen(true);
                     }}
-                  />
+                  /> */}
                   <VisibilityIcon
                     sx={{
                       height: 20,
