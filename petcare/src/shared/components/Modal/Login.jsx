@@ -115,6 +115,7 @@ const Login = (_props) => {
 
     <>
       <Modal
+        sx={{ zIndex: 4000 }}
         aria-labelledby='transition-modal-title'
         aria-describedby='transition-modal-description'
         open={_props.open}

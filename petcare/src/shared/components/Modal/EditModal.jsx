@@ -19,6 +19,8 @@ const style = {
   outline: 'none',
   border: 'none',
   p: 4,
+  overflowY: "auto",
+  maxHeight: "65vh",
 };
 
 export const EditModal = (_props) => {
@@ -28,10 +30,12 @@ export const EditModal = (_props) => {
     const payload = editData;
     try {
       const response = await axios.put(
-        'http://127.0.0.1:8000/editadoption/',
+        _props.url,
         payload
       );
+
       console.log('✅ Customer saved successfully:', response.data);
+      alert('Successfully Updated');
       _props.handleClose();
       window.location.reload();
     } catch (error) {
@@ -88,13 +92,14 @@ export const EditModal = (_props) => {
               </Typography>
 
               <TextField
+                disabled={key === 'image' || key.endsWith("id")}
                 sx={{ my: 'auto' }}
                 id='standard-basic'
                 defaultValue={value}
                 onChange={(e) =>
                   setData((prevData) => ({
                     ...prevData, // Keep previous data
-                    [key]: e.target.value, // Update only the changed key
+                    [key]: (key === 'quantity' || key === 'price' || key === 'rating') ? Number(e.target.value) : e.target.value, // Update only the changed key
                   }))
                 }
                 variant='outlined'

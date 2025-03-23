@@ -7,6 +7,7 @@ import Pagination from '@mui/material/Pagination';
 import LoadingScreen from '@/shared/components/LoadingScreen/LoadingScreen';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { Button } from '@mui/material';
 
 const Page = () => {
   const [pageSize, setPageSize] = useState(10);
@@ -21,6 +22,7 @@ const Page = () => {
     page_size: pageSize,
     current_page: page,
   };
+
 
   useEffect(() => {
     const storeAdoption = async () => {
@@ -43,14 +45,46 @@ const Page = () => {
   }, [pageSize, page]);
 
   if (productData.length === 0) return <LoadingScreen />;
+  console.log('lol', productData);
 
   const handleChange = (event, value) => {
-    console.log('lol', value);
     setPage(value);
   };
 
+  const handleApproval = async (productId, approved) => {
+    try {
+      // Find the updated product
+      const updatedProduct = productData.data.find(
+        (product) => product.productid === productId
+      );
+
+      // Create a new object with the updated "approved" value
+      const updatedProductPayload = { ...updatedProduct, approved: approved };
+
+      // Update local state optimistically
+      const updatedProducts = productData.data.map((product) =>
+        product.productid === productId ? updatedProductPayload : product
+      );
+
+
+      // API call to update the product approval status (sending only the updated product)
+      await axios.put("http://127.0.0.1:8000/editproduct/", updatedProductPayload);
+      const response = await axios.post(
+        'http://127.0.0.1:8000/getallproduct/',
+        payload
+      );
+      setProductData(response.data);
+      setTotalRecords(response.data.total_records);
+      console.log(`Product ${approved ? "approved" : "rejected"} successfully`);
+    } catch (error) {
+      console.error("Error updating product status:", error);
+      alert("Failed to update product status. Try again!");
+    }
+  };
+
+
   return (
-    <>
+    <div className='pb-[190px]'>
       <div className='flex justify-between my-auto font-[Poppins] w-full'>
         <h4 className='text-center text-[#ECDFCC]'>Product List</h4>
         <div className='text-center justify-center'>
@@ -72,20 +106,40 @@ const Page = () => {
         <table>
           <thead>
             <tr>
-              <th>No</th>
+              <th>Product id</th>
               <th className='w-[250px]'>Name</th>
               <th>Price</th>
-              <th className='w-[250px]'>Quantity</th>
-              <th>Action</th>
+              <th>Quantity</th>
+              <th>Status</th>
+              <th className='w-[150px]'>Action</th>
             </tr>
           </thead>
           <tbody>
             {productData.data.map((data, index) => (
               <tr key={index}>
-                <td>{index + 1}</td>
+                <td>{data.productid}</td>
                 <td>{data.name}</td>
                 <td>{data.price}</td>
                 <td>{data.quantity}</td>
+                <td>
+                  {data.approved === true ? (
+                    <Button
+                      sx={{ height: 36, textTransform: 'capitalize', backgroundColor: 'red' }}
+                      variant='contained'
+                      onClick={() => handleApproval(data.productid, false)}
+                    >
+                      Reject
+                    </Button>
+                  ) : (
+                    <Button
+                      sx={{ height: 36, textTransform: 'capitalize', }}
+                      variant='contained'
+                      onClick={() => handleApproval(data.productid, true)}
+                    >
+                      Approve
+                    </Button>
+                  )}
+                </td>
                 <td className='flex gap-x-2 h-[73.5px] py-auto'>
                   <EditIcon
                     sx={{
@@ -126,7 +180,7 @@ const Page = () => {
         </table>
         <div className='mt-2 mb-2'>
           <Pagination
-            count={totalRecords / pageSize}
+            count={Math.ceil(totalRecords / pageSize)}
             page={page}
             size='small'
             onChange={handleChange}
@@ -145,13 +199,15 @@ const Page = () => {
         {editOpen && (
           <EditModal
             title='Edit Product Details'
+            type='product'
+            url='http://127.0.0.1:8000/editproduct/'
             open={true}
             handleClose={() => setEditOpen(false)}
             data={previewData}
           />
         )}
       </div>
-    </>
+    </div >
   );
 };
 

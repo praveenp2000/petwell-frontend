@@ -85,7 +85,7 @@ const Page = () => {
                 <td>{data.name}</td>
                 <td>{data.age}</td>
                 <td className='flex gap-x-2 h-[73.5px] py-auto'>
-                  <EditIcon
+                  {/* <EditIcon
                     sx={{
                       height: 20,
                       width: 20,
@@ -100,7 +100,7 @@ const Page = () => {
                       setPreviewData(data);
                       setEditOpen(true);
                     }}
-                  />
+                  /> */}
                   <VisibilityIcon
                     sx={{
                       height: 20,
@@ -124,7 +124,7 @@ const Page = () => {
         </table>
         <div className='mt-2 mb-2'>
           <Pagination
-            count={totalRecords / pageSize}
+            count={Math.ceil(totalRecords / pageSize)}
             page={page}
             size='small'
             onChange={handleChange}

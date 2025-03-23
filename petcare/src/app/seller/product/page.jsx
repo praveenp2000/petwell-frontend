@@ -102,7 +102,7 @@ const Page = () => {
                 <td>{data.price}</td>
                 <td>{data.quantity}</td>
                 <td className='flex gap-x-2 h-[73.5px] py-auto'>
-                  {/* <EditIcon
+                  <EditIcon
                     sx={{
                       height: 20,
                       width: 20,
@@ -117,7 +117,7 @@ const Page = () => {
                       setPreviewData(data);
                       setEditOpen(true);
                     }}
-                  /> */}
+                  />
                   <VisibilityIcon
                     sx={{
                       height: 20,
@@ -161,6 +161,7 @@ const Page = () => {
           <EditModal
             title='Edit Adoption Details'
             open={true}
+            url='http://127.0.0.1:8000/editproduct/'
             handleClose={() => setEditOpen(false)}
             data={previewData}
           />

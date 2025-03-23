@@ -78,11 +78,11 @@ export default function Layout({ children }) {
       link: '/doctor/health',
       icon: <LocalHospitalIcon sx={{ color: 'white' }} />,
     },
-    {
-      title: 'Settings',
-      link: '/customer/purchase',
-      icon: <SettingsIcon sx={{ color: 'white' }} />,
-    },
+    // {
+    //   title: 'Settings',
+    //   link: '/customer/purchase',
+    //   icon: <SettingsIcon sx={{ color: 'white' }} />,
+    // },
   ];
 
   return (
