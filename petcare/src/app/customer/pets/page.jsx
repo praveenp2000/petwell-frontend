@@ -124,7 +124,7 @@ const Page = () => {
         </table>
         <div className='mt-2 mb-2'>
           <Pagination
-            count={totalRecords / pageSize}
+            count={Math.ceil(totalRecords / pageSize)}
             page={page}
             size='small'
             onChange={handleChange}

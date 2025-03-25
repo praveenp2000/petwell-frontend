@@ -7,6 +7,8 @@ import Pagination from '@mui/material/Pagination';
 import LoadingScreen from '@/shared/components/LoadingScreen/LoadingScreen';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { Button } from '@mui/material';
+import { AddForms } from './AddForms';
 
 const Page = () => {
   const [pageSize, setPageSize] = useState(10);
@@ -15,11 +17,34 @@ const Page = () => {
   const [totalRecords, setTotalRecords] = useState(10);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
+  const [openForm, setOpenForm] = useState(false);
   const [previewData, setPreviewData] = useState([]);
 
+  const storedUser = sessionStorage.getItem('user');
+  const userData = JSON.parse(storedUser);
+  const user_id = userData.cid;
+
   const payload = {
+    customer_id: user_id,
     page_size: pageSize,
     current_page: page,
+  };
+
+  const storeAdoption = async () => {
+    try {
+      const response = await axios.post(
+        'http://127.0.0.1:8000/getallbooking/',
+        payload
+      );
+      console.log('✅ Customer saved successfully:', response.data);
+      setBookingData(response.data);
+      setTotalRecords(response.data.total_records);
+    } catch (error) {
+      console.error(
+        '❌ Error saving adoption:',
+        error.response ? error.response.data : error.message
+      );
+    }
   };
 
   useEffect(() => {
@@ -50,9 +75,16 @@ const Page = () => {
   };
 
   return (
-    <>
+    <div className='pb-[200px]'>
       <div className='flex justify-between my-auto font-[Poppins] w-full'>
         <h4 className='text-center text-[#ECDFCC]'>Booking Details</h4>
+        <Button
+          sx={{ height: 36, textTransform: 'capitalize' }}
+          variant='contained'
+          onClick={() => setOpenForm(true)}
+        >
+          Book Now
+        </Button>
         <div className='text-center justify-center'>
           <div className='w-20 mb-4'>
             <select
@@ -72,7 +104,7 @@ const Page = () => {
         <table>
           <thead>
             <tr>
-              <th>No</th>
+              <th>Id</th>
               <th className='w-[250px]'>Slot</th>
               <th className='w-[250px]'>Date</th>
               <th>Booking_type</th>
@@ -82,12 +114,12 @@ const Page = () => {
           <tbody>
             {bookingData.data.map((data, index) => (
               <tr key={index}>
-                <td>{index + 1}</td>
+                <td>{data.bid}</td>
                 <td>{data.slot}</td>
                 <td>{data.date}</td>
                 <td>{data.booking_type}</td>
                 <td className='flex gap-x-2 h-[73.5px] py-auto'>
-                  <EditIcon
+                  {/* <EditIcon
                     sx={{
                       height: 20,
                       width: 20,
@@ -102,7 +134,7 @@ const Page = () => {
                       setPreviewData(data);
                       setEditOpen(true);
                     }}
-                  />
+                  /> */}
                   <VisibilityIcon
                     sx={{
                       height: 20,
@@ -126,7 +158,7 @@ const Page = () => {
         </table>
         <div className='mt-2 mb-2'>
           <Pagination
-            count={totalRecords / pageSize}
+            count={Math.ceil(totalRecords / pageSize)}
             page={page}
             size='small'
             onChange={handleChange}
@@ -151,7 +183,13 @@ const Page = () => {
           />
         )}
       </div>
-    </>
+
+      <AddForms
+        open={openForm}
+        handleClose={() => setOpenForm(false)}
+        getAllBookings={() => storeAdoption()}
+      />
+    </div>
   );
 };
 

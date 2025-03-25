@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import {
   Backdrop,
@@ -7,17 +7,15 @@ import {
   Divider,
   Fade,
   Modal,
-  TextareaAutosize,
   TextField,
   Typography,
 } from '@mui/material';
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useEffect } from 'react';
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation';
 import Alert from '@mui/material/Alert';
 import { useGlobalState } from '../globalState/GlobalStateProvider';
-
 
 const style = {
   position: 'absolute',
@@ -33,12 +31,11 @@ const style = {
 };
 
 const Login = (_props) => {
-
-  const [userType, setUserType] = useState('');
+  const [userType, setUserType] = useState('Customer');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [apiUrl, setApiUrl] = useState('');
-  const [navigationUrl, setNavigationUrl] = useState('');
+  const [apiUrl, setApiUrl] = useState('http://127.0.0.1:8000/customerlogin/');
+  const [navigationUrl, setNavigationUrl] = useState('/customer/booking');
   const [loginData, setLoginData] = useState('');
   const [showAlert, setShowAlert] = useState(false);
   const [status, setStatus] = useState(0);
@@ -52,7 +49,9 @@ const Login = (_props) => {
     }, 5000);
   }, [showAlert]);
 
-  useEffect(() => {
+  const payload = { email: email, password: password };
+
+  const submitData = async () => {
     if (userType === 'Doctor') {
       setApiUrl('http://127.0.0.1:8000/doctorlogin/');
       setNavigationUrl('/doctor/booking');
@@ -73,46 +72,26 @@ const Login = (_props) => {
       setNavigationUrl('/admin/report');
     }
 
-  }, [userType]);
-
-  const payload = { email: email, password: password }
-
-  const submitData = async () => {
     try {
-      const response = await axios.post(
-        apiUrl,
-        payload
-      );
+      const response = await axios.post(apiUrl, payload);
       setLoginData(response.data);
       if (response.data.message === 'Login successfull') {
         setStatus(1);
         setUser(response.data.data);
-        sessionStorage.setItem("user", JSON.stringify(response.data.data));
+        sessionStorage.setItem('user', JSON.stringify(response.data.data));
         _props.handleClose();
         router.push(navigationUrl);
-      }
-
-      else {
+      } else {
         setStatus(2);
         setShowAlert(true);
       }
-    }
-    catch (error) {
+    } catch (error) {
       setStatus(0);
       setShowAlert(false);
-      console.error(
-        '❌ Error saving adoption:',
-        error.response ? error.response.data : error.message
-      );
     }
   };
 
-
-
-
-
   return (
-
     <>
       <Modal
         sx={{ zIndex: 4000 }}
@@ -176,7 +155,9 @@ const Login = (_props) => {
                 id='email'
                 type='email'
                 defaultValue={email}
-                onChange={(event) => { setEmail(event.target.value) }}
+                onChange={(event) => {
+                  setEmail(event.target.value);
+                }}
                 variant='outlined'
                 size='small'
               />
@@ -200,7 +181,9 @@ const Login = (_props) => {
                 sx={{ my: 'auto' }}
                 type='password'
                 id='password'
-                onChange={(event) => { setPassword(event.target.value) }}
+                onChange={(event) => {
+                  setPassword(event.target.value);
+                }}
                 defaultValue={password}
                 variant='outlined'
                 size='small'
@@ -220,7 +203,7 @@ const Login = (_props) => {
 
             <Box sx={{ pt: 4, pb: 4 }}>
               {showAlert && status === 2 && (
-                <Alert variant="filled" severity="error">
+                <Alert variant='filled' severity='error'>
                   {loginData.message}
                 </Alert>
               )}
@@ -237,7 +220,6 @@ const Login = (_props) => {
         </Box>
       )
       } */}
-
     </>
   );
 };

@@ -30,6 +30,23 @@ const Page = () => {
   const seller_id = userData.sid;
   console.log('lool', userData);
 
+  const storeAdoption = async () => {
+    try {
+      const response = await axios.post(
+        'http://127.0.0.1:8000/getproductbysellerid/' + seller_id,
+        payload
+      );
+      console.log('✅ Customer saved successfully:', response.data);
+      setProductData(response.data);
+      setTotalRecords(response.data.total_records);
+    } catch (error) {
+      console.error(
+        '❌ Error saving adoption:',
+        error.response ? error.response.data : error.message
+      );
+    }
+  };
+
   useEffect(() => {
     const storeAdoption = async () => {
       try {
@@ -62,7 +79,7 @@ const Page = () => {
       <div className='flex justify-between my-auto font-[Poppins] w-full'>
         <h4 className='text-center text-[#ECDFCC]'>Product List</h4>
         <Button
-          sx={{ height: 36, textTransform: 'capitalize', }}
+          sx={{ height: 36, textTransform: 'capitalize' }}
           variant='contained'
           onClick={() => setOpenForm(true)}
         >
@@ -141,7 +158,7 @@ const Page = () => {
         </table>
         <div className='mt-2 mb-2'>
           <Pagination
-            count={totalRecords / pageSize}
+            count={Math.ceil(totalRecords / pageSize)}
             page={currentPage}
             size='small'
             onChange={handleChange}

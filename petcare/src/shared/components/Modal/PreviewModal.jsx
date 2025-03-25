@@ -15,8 +15,8 @@ const style = {
   outline: 'none',
   border: 'none',
   p: 4,
-  overflowY: "auto",
-  maxHeight: "65vh",
+  overflowY: 'auto',
+  maxHeight: '65vh',
 };
 
 export const PreviewModal = (_props) => {
@@ -51,12 +51,13 @@ export const PreviewModal = (_props) => {
           </Typography>
 
           {Object.entries(_props.data).map(([key, value], index) => (
-
             <div key={index} className='w-full'>
-
               {key === 'image' && (
                 <div className='w-full justify-center mt-10'>
-                  <img className='w-[90px] h-[90px]' src={`http://127.0.0.1:8000${value}`} />
+                  <img
+                    className='w-[90px] h-[90px]'
+                    src={`http://127.0.0.1:8000${value}`}
+                  />
                 </div>
               )}
 
@@ -65,11 +66,13 @@ export const PreviewModal = (_props) => {
                 sx={{ mt: 2, fontFamily: 'Poppins', color: '#393646' }}
               >
                 {key !== 'image' && (
-                  <>
-                    <strong className='capitalize'>{key}:  </strong>{key === 'approved' ? value ? "Yes" : "No" : value}
-                  </>
+                  <span className='grid grid-cols-2'>
+                    <strong className='capitalize'>{key}: </strong>
+                    <span>
+                      {key === 'approved' ? (value ? 'Yes' : 'No') : value}
+                    </span>
+                  </span>
                 )}
-
               </Typography>
             </div>
           ))}
