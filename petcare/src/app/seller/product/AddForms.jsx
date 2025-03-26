@@ -22,6 +22,8 @@ const style = {
   outline: 'none',
   border: 'none',
   p: 4,
+  overflowY: 'auto',
+  maxHeight: '65vh',
 };
 
 export const AddForms = ({ open, handleClose }) => {

@@ -2,22 +2,37 @@
 
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import LoadingScreen from '@/shared/components/LoadingScreen/LoadingScreen';
 
-const allSlots = ['9-10', '10-11', '11-12', '1-2', '2-3', '3-4', '4-5', '5-6'];
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import moment from "moment";
+
+import LoadingScreen from '@/shared/components/LoadingScreen/LoadingScreen';
+import { AddForms } from './AddForms';
+
+
+const allSlots = ['09:00 AM - 10:00 AM',
+  '10:00 AM - 11:00 AM',
+  '11:00 AM - 12:00 PM',
+  '01:00 PM - 02:00 PM',
+  '02:00 PM - 03:00 PM',
+  '03:00 PM - 04:00 PM',
+  '04:00 PM - 05:00 PM',
+  '05:00 PM - 06:00 PM'];
 
 const BookingCard = ({ booking }) => {
   return (
-    <div className='bg-white rounded-2xl shadow-lg p-6 hover:scale-105 transition-transform duration-300'>
+    <div className='bg-white h-[223px] rounded-2xl shadow-lg p-6 hover:scale-105 transition-transform duration-300 hover:cursor-pointer'>
       {booking ? (
         <>
           <h2 className='text-xl font-semibold text-gray-800 font-[Poppins]'>
             {booking.booking_type}
           </h2>
-          <p className='text-gray-600 font-[Poppins]'>Slot: {booking.slot}</p>
+          <p className='text-gray-600 font-[Poppins] font-extrabold'> {booking.booked_for}</p>
+          <p className='text-gray-600 font-[Poppins]'> {booking.slot}</p>
           <p className='text-gray-600 font-[Poppins]'>
             {/* {new Date(booking.date).toLocaleString()} */}
-            Date: {new Date(booking.date).getDate()}
+            Date: {new Date(booking.date).toLocaleDateString()}
           </p>
         </>
       ) : (
@@ -30,24 +45,25 @@ const BookingCard = ({ booking }) => {
 };
 
 const Page = () => {
-  const [pageSize, setPageSize] = useState(10);
-  const [page, setPage] = useState(1);
-  const [bookingData, setBookingData] = useState([]);
 
-  const payload = {
-    page_size: pageSize,
-    current_page: page,
-  };
+  const [bookingData, setBookingData] = useState([]);
+  const [bookDate, setBookDate] = useState(moment());
+  const [slotBookings, setSlotBookings] = useState('');
+  const [pet, setPet] = useState(1);
+  const [open, setOpen] = useState('');
+
+  const storedUser = sessionStorage.getItem('user');
+  const userData = JSON.parse(storedUser);
+  const user_id = userData.doctorid;
 
   useEffect(() => {
-    const storeAdoption = async () => {
+    const getBooking = async () => {
       try {
         const response = await axios.post(
-          'http://127.0.0.1:8000/getallbooking/',
-          payload
+          'http://127.0.0.1:8000/getallbookingbydoctoridanddate/', { doctor_id: user_id, date: bookDate },
+
         );
-        console.log('✅ Customer saved successfully:', response.data);
-        setBookingData(response.data);
+        setBookingData(response.data.data);
       } catch (error) {
         console.error(
           '❌ Error saving adoption:',
@@ -55,27 +71,58 @@ const Page = () => {
         );
       }
     };
-    storeAdoption();
-  }, [pageSize, page]);
+    getBooking();
+  }, [bookDate]);
 
-  const slotBookings = allSlots.map(
-    (slot) => bookingData.data?.find((b) => b.slot === slot) || null
-  );
+  useEffect(() => {
+    if (bookingData && bookingData.length > 0)
+      setSlotBookings(allSlots.map(
+        (slot) => bookingData?.find((b) => b.slot === slot) || null
+      ));
+    else setSlotBookings([null, null, null, null, null, null, null, null])
+  }, [bookingData]);
 
-  console.log('slot', slotBookings);
 
-  if (bookingData.length === 0) return <LoadingScreen />;
+
+  console.log('slot', bookingData);
+
+  // if (bookingData.length === 0) return <LoadingScreen />;
 
   return (
     <div className='min-h-screen bg-gray-100 p-8'>
-      <h1 className='text-4xl font-bold text-center mb-10 text-gray-800 font-[Poppins]'>
-        Doctor's Booking Schedule
-      </h1>
+      <div className='flex justify-between'>
+        <h1 className='text-4xl font-bold text-center mb-10 text-gray-800 font-[Poppins]'>
+          Booking Schedule
+        </h1>
+        <LocalizationProvider dateAdapter={AdapterMoment} >
+          <DatePicker
+            defaultValue={bookDate}
+            onChange={(date) =>
+              setBookDate(date?.format('DD-MM-YYYY'))
+            }
+            slotProps={{
+              textField: {
+                size: 'small', // Reduces padding
+                sx: { height: 40, '& .MuiInputBase-root': { height: 40 } }, // Adjust height
+              },
+            }}
+          />
+        </LocalizationProvider>
+      </div>
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8'>
-        {slotBookings.map((booking, index) => (
-          <BookingCard key={index} booking={booking} />
+        {slotBookings.length > 0 && slotBookings?.map((booking, index) => (
+          <div key={index} onClick={() => { if (booking != null) { console.log('lol', booking); setPet(booking.pet_id); setOpen(true); } }} >
+            <BookingCard booking={booking} />
+          </div>
         ))}
       </div>
+
+      <AddForms
+        open={open}
+        id={pet}
+        handleClose={() => setOpen(false)}
+      />
+
     </div>
   );
 };

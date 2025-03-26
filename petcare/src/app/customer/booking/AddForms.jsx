@@ -28,6 +28,8 @@ const style = {
   outline: 'none',
   border: 'none',
   p: 4,
+  overflowY: 'auto',
+  maxHeight: '65vh',
 };
 
 export const AddForms = (_props) => {
@@ -57,6 +59,7 @@ export const AddForms = (_props) => {
   useEffect(() => {
     const getAvailableSlots = async (e) => {
       try {
+
         const response = await axios.post(
           'http://127.0.0.1:8000/getavailableslots/',
           {
@@ -85,14 +88,14 @@ export const AddForms = (_props) => {
   console.log('valu', pets);
 
   // const availableSlots = [
-  //   '09:00 AM - 10:00 AM',
-  //   '10:00 AM - 11:00 AM',
-  //   '11:00 AM - 12:00 PM',
-  //   '01:00 PM - 02:00 PM',
-  //   '02:00 PM - 03:00 PM',
-  //   '03:00 PM - 04:00 PM',
-  //   '04:00 PM - 05:00 PM',
-  //   '05:00 PM - 06:00 PM',
+  // '09:00 AM - 10:00 AM',
+  // '10:00 AM - 11:00 AM',
+  // '11:00 AM - 12:00 PM',
+  // '01:00 PM - 02:00 PM',
+  // '02:00 PM - 03:00 PM',
+  // '03:00 PM - 04:00 PM',
+  // '04:00 PM - 05:00 PM',
+  // '05:00 PM - 06:00 PM',
   // ];
 
   const checkUps = ['General Checkup', 'Vaccination', 'Deworming'];
@@ -258,15 +261,15 @@ export const AddForms = (_props) => {
             >
               {payLoad.booking_type === 'Check up'
                 ? checkUps.map((slots) => (
-                    <option key={slots} value={slots}>
-                      {slots}
-                    </option>
-                  ))
+                  <option key={slots} value={slots}>
+                    {slots}
+                  </option>
+                ))
                 : services.map((slots) => (
-                    <option key={slots} value={slots}>
-                      {slots}
-                    </option>
-                  ))}
+                  <option key={slots} value={slots}>
+                    {slots}
+                  </option>
+                ))}
             </select>
           </Box>
 

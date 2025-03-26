@@ -73,11 +73,11 @@ export default function Layout({ children }) {
       link: '/doctor/pets',
       icon: <PetsIcon sx={{ color: 'white' }} />,
     },
-    {
-      title: 'Health',
-      link: '/doctor/health',
-      icon: <LocalHospitalIcon sx={{ color: 'white' }} />,
-    },
+    // {
+    //   title: 'Health',
+    //   link: '/doctor/health',
+    //   icon: <LocalHospitalIcon sx={{ color: 'white' }} />,
+    // },
     // {
     //   title: 'Settings',
     //   link: '/customer/purchase',
