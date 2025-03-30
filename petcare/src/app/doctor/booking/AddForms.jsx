@@ -12,6 +12,7 @@ import {
 import { useEffect, useState } from 'react';
 
 import axios from 'axios';
+import moment from "moment";
 
 const style = {
   position: 'absolute',
@@ -28,32 +29,38 @@ const style = {
   maxHeight: '65vh',
 };
 
-export const AddForms = (_props) => {
+export const AddHealthForms = (_props) => {
 
-  const [customer_id, setCustId] = useState(0);
+  const [payLoad, setPayLoad] = useState({
+    customer_id: 0,
+    pet_id: _props.id,
+    description: '',
+    prescription: '',
+    date: _props.date
+  });
 
   useEffect(() => {
     const getCustId = async () => {
       try {
         const cust = await axios.get(
-          'http://127.0.0.1:8000/getcustomeridfrompetid/' + _props.petid
+          'http://127.0.0.1:8000/getcustomeridfrompetid/' + _props.id
         );
-        setCustId(cust.data.cid);
+        console.log('poool', cust);
+        setPayLoad((prevState) => ({
+          ...prevState,
+          customer_id: cust.data.cid,
+        }));
+
       } catch (error) {
         alert('Network error: ' + error.message);
       }
     }
-    getCustId();
-  }, []);
 
-  const [payLoad, setPayLoad] = useState({
-    customer_id: customer_id,
-    pet_id: _props.id,
-    description: '',
-    prescription: '',
-  });
+    if (typeof _props.id != 'undefined')
+      getCustId();
+  }, [_props]);
 
-
+  console.log('payload', payLoad);
   const handleChange = (field, value) => {
     setPayLoad((prevData) => ({
       ...prevData,
@@ -70,6 +77,7 @@ export const AddForms = (_props) => {
       alert('Record Added successfully!');
       _props.handleClose();
     }
+    else alert('Unknown Error!');
   };
 
   return (

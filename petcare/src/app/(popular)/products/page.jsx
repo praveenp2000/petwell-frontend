@@ -86,7 +86,8 @@ const Page = () => {
   return (
     <div className='px-[90px]'>
       <h1 className='text-4xl font-bold text-center mb-10 text-gray-800 font-[Poppins] mt-10 '>
-        Pet Care Products
+        <span className='text-[#1989ce]'>Pet Care  </span> 
+        <span className='text-black'>Products</span>  
       </h1>
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8'>
         {productData.data.map((product) => (

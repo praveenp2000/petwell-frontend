@@ -15,6 +15,7 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { styled } from '@mui/material/styles';
+import moment from "moment";
 import axios from 'axios';
 
 const style = {
@@ -39,8 +40,8 @@ export const AddForms = (_props) => {
   const [payLoad, setPayLoad] = useState({
     slot: '',
     date: '',
-    booking_type: 'Other Service',
-    booked_for: 'Grooming',
+    booking_type: 'Check up',
+    booked_for: 'Vaccination',
     pet_id: '',
     customer_id: user_id,
     doctor_id: 1,
@@ -84,8 +85,6 @@ export const AddForms = (_props) => {
     if (payLoad.date != '') getAvailableSlots();
   }, [payLoad.date, payLoad.booking_type]);
 
-  console.log('val', payLoad);
-  console.log('valu', pets);
 
   // const availableSlots = [
   // '09:00 AM - 10:00 AM',
@@ -112,6 +111,7 @@ export const AddForms = (_props) => {
       _props.getAllBookings();
       _props.handleClose();
     }
+    _props.handleClose();
   };
 
   return (

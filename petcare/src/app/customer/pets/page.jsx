@@ -7,6 +7,8 @@ import Pagination from '@mui/material/Pagination';
 import LoadingScreen from '@/shared/components/LoadingScreen/LoadingScreen';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { HealthModal } from '@/shared/components/Modal/HealthModal';
+import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 
 const Page = () => {
   const [pageSize, setPageSize] = useState(10);
@@ -16,17 +18,23 @@ const Page = () => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const [previewData, setPreviewData] = useState([]);
+  const [healthOpen, setHealthOpen] = useState(false);
+
+  const storedUser = sessionStorage.getItem('user');
+  const userData = JSON.parse(storedUser);
+  const user_id = userData.cid;
 
   const payload = {
     page_size: pageSize,
     current_page: page,
+    customer_id: user_id
   };
 
   useEffect(() => {
     const storeAdoption = async () => {
       try {
         const response = await axios.post(
-          'http://127.0.0.1:8000/getallpet/',
+          'http://127.0.0.1:8000/getcustomerpets/',
           payload
         );
         console.log('✅ Customer saved successfully:', response.data);
@@ -50,7 +58,7 @@ const Page = () => {
   };
 
   return (
-    <>
+    <div className='h-[100vh]'>
       <div className='flex justify-between my-auto font-[Poppins] w-full'>
         <h4 className='text-center text-[#ECDFCC]'>Pet Details</h4>
         <div className='text-center justify-center'>
@@ -85,6 +93,23 @@ const Page = () => {
                 <td>{data.name}</td>
                 <td>{data.age}</td>
                 <td className='flex gap-x-2 h-[73.5px] py-auto'>
+                  <LocalHospitalIcon
+                    sx={{
+                      height: 20,
+                      width: 20,
+                      cursor: 'pointer',
+                      marginY: 'auto',
+                      '&:hover': {
+                        color: '#1989ce',
+                        transform: 'scale(1.1)',
+                      },
+                    }}
+                    onClick={() => {
+                      setPreviewData(data);
+                      setHealthOpen(true);
+                    }}
+                  />
+
                   <EditIcon
                     sx={{
                       height: 20,
@@ -149,7 +174,15 @@ const Page = () => {
           />
         )}
       </div>
-    </>
+
+      {healthOpen && (
+        <HealthModal
+          id={previewData.petid}
+          data={previewData}
+          handleClose={() => setHealthOpen(false)}
+          open={healthOpen} />
+      )}
+    </div>
   );
 };
 

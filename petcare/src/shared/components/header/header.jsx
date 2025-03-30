@@ -5,10 +5,12 @@ import Register from '../Modal/Register';
 import Login from '../Modal/Login';
 import { useGlobalState } from '../globalState/GlobalStateProvider';
 import { useRouter } from 'next/navigation';
+import { ContactUs } from '../Modal/contactus'
 
 export default function Header(_props) {
   const [openRegister, setOpenRegister] = useState(false);
   const [openLogin, setOpenLogin] = useState(false);
+  const [openContactUs, setOpenContactUs] = useState(false);
   const { user, setUser } = useGlobalState();
   console.log('user', user);
   const storedUser = sessionStorage.getItem("user");
@@ -86,12 +88,12 @@ export default function Header(_props) {
                   >
                     Service
                   </Link>
-                  <Link
-                    href='/contact-us'
+                  <div
+                    onClick={() => setOpenContactUs(true)}
                     className='nav-item nav-link !text-white hover:bg-[#1989ce]'
                   >
                     Contact
-                  </Link>
+                  </div>
                 </div>
                 <div className='mr-auto py-0 flex'>
                   {loggedIn ? (
@@ -141,7 +143,12 @@ export default function Header(_props) {
         open={openRegister}
         handleClose={() => setOpenRegister(false)}
       />
+      <ContactUs
+        open={openContactUs}
+        handleClose={() => setOpenContactUs(false)}
+      />
       <Login open={openLogin} handleClose={() => setOpenLogin(false)} />
     </>
   );
 }
+

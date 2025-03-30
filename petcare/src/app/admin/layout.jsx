@@ -83,36 +83,36 @@ export default function Layout({ children }) {
       link: '/admin/pets',
       icon: <PetsIcon sx={{ color: 'white' }} />,
     },
-    {
-      title: 'Adoptions',
-      link: '/admin/adoption',
-      icon: <HouseIcon sx={{ color: 'white' }} />,
-    },
-    {
-      title: 'Health',
-      link: '/admin/health',
-      icon: <LocalHospitalIcon sx={{ color: 'white' }} />,
-    },
-    {
-      title: 'Services',
-      link: '/admin/service',
-      icon: <CleaningServicesIcon sx={{ color: 'white' }} />,
-    },
-    {
-      title: 'Pet Services',
-      link: '/admin/petservice',
-      icon: <SpaIcon sx={{ color: 'white' }} />,
-    },
+    // {
+    //   title: 'Adoptions',
+    //   link: '/admin/adoption',
+    //   icon: <HouseIcon sx={{ color: 'white' }} />,
+    // },
+    // {
+    //   title: 'Health',
+    //   link: '/admin/health',
+    //   icon: <LocalHospitalIcon sx={{ color: 'white' }} />,
+    // },
+    // {
+    //   title: 'Services',
+    //   link: '/admin/service',
+    //   icon: <CleaningServicesIcon sx={{ color: 'white' }} />,
+    // },
+    // {
+    //   title: 'Pet Services',
+    //   link: '/admin/petservice',
+    //   icon: <SpaIcon sx={{ color: 'white' }} />,
+    // },
     {
       title: 'Products',
       link: '/admin/product',
       icon: <Inventory2Icon sx={{ color: 'white' }} />,
     },
-    {
-      title: 'Purchases',
-      link: '/admin/purchase',
-      icon: <ShopIcon sx={{ color: 'white' }} />,
-    },
+    // {
+    //   title: 'Purchases',
+    //   link: '/admin/purchase',
+    //   icon: <ShopIcon sx={{ color: 'white' }} />,
+    // },
     {
       title: 'Sellers',
       link: '/admin/seller',

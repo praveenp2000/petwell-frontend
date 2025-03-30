@@ -78,17 +78,18 @@ export default function Layout({ children }) {
       link: '/customer/adoption',
       icon: <HouseIcon sx={{ color: 'white' }} />,
     },
-    {
-      title: 'Health',
-      link: '/customer/health',
-      icon: <LocalHospitalIcon sx={{ color: 'white' }} />,
-    },
 
-    {
-      title: 'Pet Services',
-      link: '/customer/petservice',
-      icon: <SpaIcon sx={{ color: 'white' }} />,
-    },
+    // {
+    //   title: 'Health',
+    //   link: '/customer/health',
+    //   icon: <LocalHospitalIcon sx={{ color: 'white' }} />,
+    // },
+
+    // {
+    //   title: 'Pet Services',
+    //   link: '/customer/petservice',
+    //   icon: <SpaIcon sx={{ color: 'white' }} />,
+    // },
 
     {
       title: 'Purchases',
@@ -98,7 +99,7 @@ export default function Layout({ children }) {
 
     {
       title: 'Settings',
-      link: '/customer/purchase',
+      link: '/customer/settings',
       icon: <SettingsIcon sx={{ color: 'white' }} />,
     },
 

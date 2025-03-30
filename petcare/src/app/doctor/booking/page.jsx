@@ -8,7 +8,7 @@ import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import moment from "moment";
 
 import LoadingScreen from '@/shared/components/LoadingScreen/LoadingScreen';
-import { AddForms } from './AddForms';
+import { AddHealthForms } from './AddForms';
 
 
 const allSlots = ['09:00 AM - 10:00 AM',
@@ -50,7 +50,7 @@ const Page = () => {
   const [bookDate, setBookDate] = useState(moment());
   const [slotBookings, setSlotBookings] = useState('');
   const [pet, setPet] = useState(1);
-  const [open, setOpen] = useState('');
+  const [open, setOpen] = useState(false);
 
   const storedUser = sessionStorage.getItem('user');
   const userData = JSON.parse(storedUser);
@@ -111,17 +111,26 @@ const Page = () => {
       </div>
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8'>
         {slotBookings.length > 0 && slotBookings?.map((booking, index) => (
-          <div key={index} onClick={() => { if (booking != null) { console.log('lol', booking); setPet(booking.pet_id); setOpen(true); } }} >
+          <div key={index} onClick={() => {
+            if (booking != null && booking.booking_type !== 'Other Service') {
+              setPet(booking);
+              setOpen(true);
+            }
+          }} >
             <BookingCard booking={booking} />
           </div>
         ))}
       </div>
 
-      <AddForms
-        open={open}
-        id={pet}
-        handleClose={() => setOpen(false)}
-      />
+      {open &&
+        <AddHealthForms
+          open={open}
+          id={pet.pet_id}
+          date={pet.date}
+          handleClose={() => setOpen(false)}
+        />
+      }
+
 
     </div>
   );

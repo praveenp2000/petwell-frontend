@@ -12,17 +12,14 @@ const Page = () => (
         <div className='col-lg-7 pb-5 pb-lg-0 px-3 px-lg-5'>
           <h4 className='text-[#1989ce]'>About Us</h4>
           <h1 className='display-4 mb-4'>
-            <span className='text-[#1989ce]'>Boarding</span> &{' '}
-            <span className='text-bg-white'>Daycare</span>
+            <span className='text-[#1989ce]'>Grooming</span> &{' '}
+            <span className='text-bg-white'>Wellness</span>
           </h1>
           <h5 className='text-muted mb-3'>
-            Amet stet amet ut. Sit no vero vero no dolor. Sed erat ut sea. Just
-            clita ut stet kasd at diam sit erat vero sit.
+            At Pet Grooming & Wellness, we believe that every pet deserves to look and feel their best. 
           </h5>
           <p className='mb-4'>
-            Dolores lorem lorem ipsum sit et ipsum. Sadip sea amet diam dolore
-            sed et. Sit rebum labore sit sit ut vero no sit. Et elitr stet dolor
-            sed sit et sed ipsum et kasd ut. Erat duo eos et erat sed diam duo
+            Our mission is to provide high-quality grooming services and wellness solutions tailored to the unique needs of your furry companions. With a team of experienced professionals and a pet-friendly environment, we ensure that every pet receives the care, attention, and love they deserve.
           </p>
           <ul className='list-inline'>
             <li>
@@ -44,7 +41,7 @@ const Page = () => (
               </h5>
             </li>
           </ul>
-          <a href='' className='btn btn-lg btn-primary mt-3 px-4'>
+          <a href='' className='!bg-[#1989ce] btn btn-lg btn-primary mt-3 px-4'>
             Learn More
           </a>
         </div>
@@ -73,7 +70,7 @@ const Page = () => (
           <div className='col-lg-7 py-5 py-lg-0 px-3 px-lg-5'>
             <h4 className='text-secondary mb-3'>Why Choose Us?</h4>
             <h1 className='display-4 mb-4'>
-              <span className='text-primary'>Special Care</span> On Pets
+              <span className='text-[#1989ce]'>Special Care</span> On Pets
             </h1>
             <p className='mb-4'>
               "Your pet deserves the best, and we provide the special care they
@@ -123,7 +120,7 @@ const Page = () => (
       </div>
     </div>
 
-    <div className='container mt-5 pt-5 pb-3'>
+    {/* <div className='container mt-5 pt-5 pb-3'>
       <div className='d-flex flex-column text-center mb-5'>
         <h4 className='text-secondary mb-3'>Team Member</h4>
         <h1 className='display-4 m-0'>
@@ -176,7 +173,7 @@ const Page = () => (
           </div>
         </div>
       </div>
-    </div>
+    </div> */}
   </div>
 );
 

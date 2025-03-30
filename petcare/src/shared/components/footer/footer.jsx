@@ -5,8 +5,11 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import EmailIcon from '@mui/icons-material/Email';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import Link from 'next/link';
+import { ContactUs } from '../Modal/contactus'
+import { useState } from 'react';
 
 export default function Footer() {
+  const [openContactUs, setOpenContactUs] = useState(false);
   return (
     <div className='bg-black'>
       <div className='container-fluid bg-dark text-white mt-5 py-5 px-sm-3 px-md-5'>
@@ -54,14 +57,16 @@ export default function Footer() {
                     <ChevronRightIcon />
                     Our Services
                   </Link>
-                  <Link className='text-white mb-2' href='/our-team'>
+                  {/* <Link className='text-white mb-2' href='/our-team'>
                     <ChevronRightIcon />
                     Our Team
-                  </Link>
-                  <Link className='text-white' href='/contact-us'>
-                    <ChevronRightIcon />
+                  </Link> */}
+                  <div
+                    onClick={() => setOpenContactUs(true)}
+                    className='nav-item nav-link !text-white hover:bg-[#1989ce]'
+                  >
                     Contact Us
-                  </Link>
+                  </div>
                 </div>
               </div>
             </div>
@@ -102,6 +107,10 @@ export default function Footer() {
           </div>
         </div>
       </div>
+      <ContactUs
+        open={openContactUs}
+        handleClose={() => setOpenContactUs(false)}
+      />
     </div>
   );
 }

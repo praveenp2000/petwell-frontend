@@ -1,12 +1,13 @@
 'use client';
 import { PreviewModal } from '@/shared/components/Modal/PreviewModal';
 import { EditModal } from '@/shared/components/Modal/EditModal';
-import EditIcon from '@mui/icons-material/Edit';
+import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import Pagination from '@mui/material/Pagination';
 import LoadingScreen from '@/shared/components/LoadingScreen/LoadingScreen';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { HealthModal } from '@/shared/components/Modal/HealthModal';
 
 const Page = () => {
   const [pageSize, setPageSize] = useState(10);
@@ -16,6 +17,7 @@ const Page = () => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const [previewData, setPreviewData] = useState([]);
+  const [healthOpen, setHealthOpen] = useState(false);
 
   const payload = {
     page_size: pageSize,
@@ -85,7 +87,7 @@ const Page = () => {
                 <td>{data.name}</td>
                 <td>{data.age}</td>
                 <td className='flex gap-x-2 h-[73.5px] py-auto'>
-                  {/* <EditIcon
+                  <LocalHospitalIcon
                     sx={{
                       height: 20,
                       width: 20,
@@ -98,9 +100,9 @@ const Page = () => {
                     }}
                     onClick={() => {
                       setPreviewData(data);
-                      setEditOpen(true);
+                      setHealthOpen(true);
                     }}
-                  /> */}
+                  />
                   <VisibilityIcon
                     sx={{
                       height: 20,
@@ -147,6 +149,14 @@ const Page = () => {
             handleClose={() => setEditOpen(false)}
             data={previewData}
           />
+        )}
+
+        {healthOpen && (
+          <HealthModal
+            id={previewData.petid}
+            data={previewData}
+            handleClose={() => setHealthOpen(false)}
+            open={healthOpen} />
         )}
       </div>
     </>

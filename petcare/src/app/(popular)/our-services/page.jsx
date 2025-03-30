@@ -12,7 +12,7 @@ const Page = () => (
       <div className='d-flex flex-column text-center mb-5'>
         <h4 className='text-secondary mb-3'>Our Services</h4>
         <h1 className='display-4 m-0'>
-          <span className='text-primary'>Premium</span> Pet Services
+          <span className='text-[#1989ce]'>Premium</span> Pet Services
         </h1>
       </div>
       <div className='row pb-3'>
@@ -28,9 +28,9 @@ const Page = () => (
               parasites, keeping them safe, comfortable, and free from
               infections
             </p>
-            <a className='text-uppercase font-weight-bold' href=''>
+            {/* <a className='text-uppercase font-weight-bold' href=''>
               Read More
-            </a>
+            </a> */}
           </div>
         </div>
         <div className='col-md-6 col-lg-4 mb-4'>
@@ -45,9 +45,9 @@ const Page = () => (
               your pet, ensuring early detection of any issues and maintaining
               their overall well-being.
             </p>
-            <a className='text-uppercase font-weight-bold' href=''>
+            {/* <a className='text-uppercase font-weight-bold' href=''>
               Read More
-            </a>
+            </a> */}
           </div>
         </div>
         <div className='col-md-6 col-lg-4 mb-4'>
@@ -62,9 +62,9 @@ const Page = () => (
               providing services like bathing, brushing, ensuring they feel and
               look their best.
             </p>
-            <a className='text-uppercase font-weight-bold' href=''>
+            {/* <a className='text-uppercase font-weight-bold' href=''>
               Read More
-            </a>
+            </a> */}
           </div>
         </div>
         <div className='col-md-6 col-lg-4 mb-4'>
@@ -79,9 +79,9 @@ const Page = () => (
               providing peace of mind by ensuring they can always be returned to
               you if lost.
             </p>
-            <a className='text-uppercase font-weight-bold' href=''>
+            {/* <a className='text-uppercase font-weight-bold' href=''>
               Read More
-            </a>
+            </a> */}
           </div>
         </div>
         <div className='col-md-6 col-lg-4 mb-4'>
@@ -96,9 +96,9 @@ const Page = () => (
               injuries, fractures, and internal health issues in your pet,
               helping us provide the best treatment plan.
             </p>
-            <a className='text-uppercase font-weight-bold' href=''>
+            {/* <a className='text-uppercase font-weight-bold' href=''>
               Read More
-            </a>
+            </a> */}
           </div>
         </div>
         <div className='col-md-6 col-lg-4 mb-4'>
@@ -112,9 +112,9 @@ const Page = () => (
               Emergency treatment provides immediate, ensuring quick and
               effective intervention to stabilize their condition.
             </p>
-            <a className='text-uppercase font-weight-bold' href=''>
+            {/* <a className='text-uppercase font-weight-bold' href=''>
               Read More
-            </a>
+            </a> */}
           </div>
         </div>
       </div>
