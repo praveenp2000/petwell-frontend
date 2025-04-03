@@ -27,7 +27,7 @@ const Page = () => {
   const payload = {
     page_size: pageSize,
     current_page: page,
-    customer_id: user_id
+    customer_id: user_id,
   };
 
   useEffect(() => {
@@ -110,7 +110,7 @@ const Page = () => {
                     }}
                   />
 
-                  <EditIcon
+                  {/* <EditIcon
                     sx={{
                       height: 20,
                       width: 20,
@@ -125,7 +125,7 @@ const Page = () => {
                       setPreviewData(data);
                       setEditOpen(true);
                     }}
-                  />
+                  /> */}
                   <VisibilityIcon
                     sx={{
                       height: 20,
@@ -180,7 +180,8 @@ const Page = () => {
           id={previewData.petid}
           data={previewData}
           handleClose={() => setHealthOpen(false)}
-          open={healthOpen} />
+          open={healthOpen}
+        />
       )}
     </div>
   );

@@ -5,7 +5,7 @@ import Register from '../Modal/Register';
 import Login from '../Modal/Login';
 import { useGlobalState } from '../globalState/GlobalStateProvider';
 import { useRouter } from 'next/navigation';
-import { ContactUs } from '../Modal/contactus'
+import { ContactUs } from '../Modal/contactus';
 
 export default function Header(_props) {
   const [openRegister, setOpenRegister] = useState(false);
@@ -13,7 +13,7 @@ export default function Header(_props) {
   const [openContactUs, setOpenContactUs] = useState(false);
   const { user, setUser } = useGlobalState();
   console.log('user', user);
-  const storedUser = sessionStorage.getItem("user");
+  const storedUser = sessionStorage.getItem('user');
   const router = useRouter();
 
   const loggedIn = typeof user?.name != 'undefined' || storedUser;
@@ -25,7 +25,7 @@ export default function Header(_props) {
     if (typeof userData?.cid != 'undefined') return '/customer/booking';
     if (typeof userData?.sid != 'undefined') return '/seller/report';
     if (typeof userData?.doctorid != 'undefined') return '/doctor/health';
-  }
+  };
 
   return (
     <>
@@ -57,8 +57,9 @@ export default function Header(_props) {
         )}
 
         <div
-          className={`'container-fluid p-0' ${_props.hideLayout ? '!fixed w-full mb-4' : ''
-            }`}
+          className={`'container-fluid p-0' ${
+            _props.hideLayout ? '!fixed w-full mb-4' : ''
+          }`}
         >
           <div className='bg-dark h-[87px] pt-4'>
             <nav className='py-lg-0 px-lg-5'>
@@ -75,6 +76,12 @@ export default function Header(_props) {
                     className='nav-item nav-link !text-white hover:bg-[#1989ce]'
                   >
                     Our Products
+                  </Link>
+                  <Link
+                    href='/adoptions'
+                    className='nav-item nav-link !text-white hover:bg-[#1989ce]'
+                  >
+                    Adoptions
                   </Link>
                   <Link
                     href='/about-us'
@@ -132,7 +139,6 @@ export default function Header(_props) {
                       </div>
                     </>
                   )}
-
                 </div>
               </div>
             </nav>
@@ -151,4 +157,3 @@ export default function Header(_props) {
     </>
   );
 }
-
