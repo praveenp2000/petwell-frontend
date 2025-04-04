@@ -1,13 +1,13 @@
 'use client';
-import { PreviewModal } from '@/shared/components/Modal/PreviewModal';
-import { EditModal } from '@/shared/components/Modal/EditModal';
+import { PreviewModal } from '../../../shared/components/Modal/PreviewModal';
+import { EditModal } from '../../../shared/components/Modal/EditModal';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import Pagination from '@mui/material/Pagination';
-import LoadingScreen from '@/shared/components/LoadingScreen/LoadingScreen';
+import LoadingScreen from '../../../shared/components/LoadingScreen/LoadingScreen';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { HealthModal } from '@/shared/components/Modal/HealthModal';
+import { HealthModal } from '../../../shared/components/Modal/HealthModal';
 
 const Page = () => {
   const [pageSize, setPageSize] = useState(10);
@@ -31,7 +31,6 @@ const Page = () => {
           'http://127.0.0.1:8000/getallpet/',
           payload
         );
-        console.log('✅ Customer saved successfully:', response.data);
         setPetData(response.data);
         setTotalRecords(response.data.total_records);
       } catch (error) {
@@ -47,7 +46,6 @@ const Page = () => {
   if (petData.length === 0) return <LoadingScreen />;
 
   const handleChange = (event, value) => {
-    console.log('lol', value);
     setPage(value);
   };
 

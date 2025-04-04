@@ -34,7 +34,6 @@ export const EditModal = (_props) => {
         payload
       );
 
-      console.log('✅ Customer saved successfully:', response.data);
       alert('Successfully Updated');
       _props.handleClose();
       window.location.reload();

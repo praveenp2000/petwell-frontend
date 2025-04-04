@@ -1,10 +1,10 @@
 'use client';
-import { PreviewModal } from '@/shared/components/Modal/PreviewModal';
-import { EditModal } from '@/shared/components/Modal/EditModal';
+import { PreviewModal } from '../../../../shared/components/Modal/PreviewModal';
+import { EditModal } from '../../../../shared/components/Modal/EditModal';
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import Pagination from '@mui/material/Pagination';
-import LoadingScreen from '@/shared/components/LoadingScreen/LoadingScreen';
+import LoadingScreen from '../../../../shared/components/LoadingScreen/LoadingScreen';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Button } from '@mui/material';
@@ -31,7 +31,6 @@ const Page = () => {
           'http://127.0.0.1:8000/getallproduct/',
           payload
         );
-        console.log('✅ Customer saved successfully:', response.data);
         setProductData(response.data);
         setTotalRecords(response.data.total_records);
       } catch (error) {
@@ -45,7 +44,6 @@ const Page = () => {
   }, [pageSize, page]);
 
   if (productData.length === 0) return <LoadingScreen />;
-  console.log('lol', productData);
 
   const handleChange = (event, value) => {
     setPage(value);
@@ -75,9 +73,7 @@ const Page = () => {
       );
       setProductData(response.data);
       setTotalRecords(response.data.total_records);
-      console.log(`Product ${approved ? "approved" : "rejected"} successfully`);
     } catch (error) {
-      console.error("Error updating product status:", error);
       alert("Failed to update product status. Try again!");
     }
   };

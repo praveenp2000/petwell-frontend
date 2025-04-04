@@ -1,13 +1,13 @@
 'use client';
 
-import LoadingScreen from '@/shared/components/LoadingScreen/LoadingScreen';
+import LoadingScreen from '../../../shared/components/LoadingScreen/LoadingScreen';
 import { Pagination } from '@mui/material';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 const ProductCard = ({ product }) => {
   return (
-    <div className='bg-white rounded-2xl shadow-lg overflow-hidden hover:scale-105 transition-transform duration-300 font-[Poppins]'>
+    <div className='bg-white rounded-2xl shadow-lg overflow-hidden hover:cursor-pointer hover:scale-105 transition-transform duration-300 font-[Poppins]'>
       <img
         src={'http://127.0.0.1:8000' + product.image}
         alt={product.name}
@@ -64,7 +64,6 @@ const Page = () => {
           'http://127.0.0.1:8000/getapprovedproduct/',
           payload
         );
-        console.log('✅ Customer saved successfully:', response.data);
         setProductData(response.data);
         setTotalRecords(response.data.total_records);
       } catch (error) {
@@ -86,8 +85,8 @@ const Page = () => {
   return (
     <div className='px-[90px]'>
       <h1 className='text-4xl font-bold text-center mb-10 text-gray-800 font-[Poppins] mt-10 '>
-        <span className='text-[#1989ce]'>Pet Care  </span> 
-        <span className='text-black'>Products</span>  
+        <span className='text-[#1989ce]'>Pet Care  </span>
+        <span className='text-black'>Products</span>
       </h1>
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8'>
         {productData.data.map((product) => (

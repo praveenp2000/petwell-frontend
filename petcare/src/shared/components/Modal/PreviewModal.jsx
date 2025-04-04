@@ -20,7 +20,7 @@ const style = {
 };
 
 export const PreviewModal = (_props) => {
-  console.log('open', _props);
+
   return (
     <Modal
       aria-labelledby='transition-modal-title'

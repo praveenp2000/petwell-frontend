@@ -1,10 +1,10 @@
 'use client';
-import { PreviewModal } from '@/shared/components/Modal/PreviewModal';
-import { EditModal } from '@/shared/components/Modal/EditModal';
+import { PreviewModal } from '../../../../shared/components/Modal/PreviewModal';
+import { EditModal } from '../../../../shared/components/Modal/EditModal';
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import Pagination from '@mui/material/Pagination';
-import LoadingScreen from '@/shared/components/LoadingScreen/LoadingScreen';
+import LoadingScreen from '../../../../shared/components/LoadingScreen/LoadingScreen';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
@@ -29,7 +29,6 @@ const Page = () => {
           'http://127.0.0.1:8000/getallbooking/',
           payload
         );
-        console.log('✅ Customer saved successfully:', response.data);
         setBookingData(response.data);
         setTotalRecords(response.data.total_records);
       } catch (error) {
@@ -45,7 +44,6 @@ const Page = () => {
   if (bookingData.length === 0) return <LoadingScreen />;
 
   const handleChange = (event, value) => {
-    console.log('lol', value);
     setPage(value);
   };
 

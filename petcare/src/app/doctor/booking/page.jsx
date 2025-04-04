@@ -7,7 +7,6 @@ import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import moment from "moment";
 
-import LoadingScreen from '@/shared/components/LoadingScreen/LoadingScreen';
 import { AddHealthForms } from './AddForms';
 
 
@@ -81,12 +80,6 @@ const Page = () => {
       ));
     else setSlotBookings([null, null, null, null, null, null, null, null])
   }, [bookingData]);
-
-
-
-  console.log('slot', bookingData);
-
-  // if (bookingData.length === 0) return <LoadingScreen />;
 
   return (
     <div className='min-h-screen bg-gray-100 p-8'>

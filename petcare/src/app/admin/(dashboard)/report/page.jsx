@@ -1,4 +1,4 @@
-import Report from '@/shared/components/report/Report';
+import Report from '../../../../shared/components/report/Report';
 import React from 'react';
 
 const Page = () => {

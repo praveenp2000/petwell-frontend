@@ -6,19 +6,21 @@ import Login from '../Modal/Login';
 import { useGlobalState } from '../globalState/GlobalStateProvider';
 import { useRouter } from 'next/navigation';
 import { ContactUs } from '../Modal/contactus';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { Badge } from '@mui/material';
 
 export default function Header(_props) {
   const [openRegister, setOpenRegister] = useState(false);
   const [openLogin, setOpenLogin] = useState(false);
   const [openContactUs, setOpenContactUs] = useState(false);
   const { user, setUser } = useGlobalState();
-  console.log('user', user);
+
   const storedUser = sessionStorage.getItem('user');
   const router = useRouter();
 
   const loggedIn = typeof user?.name != 'undefined' || storedUser;
   const userData = JSON.parse(storedUser);
-  console.log('userD', userData);
+
 
   const navigate = () => {
     if (typeof userData?.aid != 'undefined') return '/admin/report';
@@ -57,9 +59,8 @@ export default function Header(_props) {
         )}
 
         <div
-          className={`'container-fluid p-0' ${
-            _props.hideLayout ? '!fixed w-full mb-4' : ''
-          }`}
+          className={`'container-fluid p-0' ${_props.hideLayout ? '!fixed w-full mb-4' : ''
+            }`}
         >
           <div className='bg-dark h-[87px] pt-4'>
             <nav className='py-lg-0 px-lg-5'>
@@ -122,6 +123,12 @@ export default function Header(_props) {
                       >
                         Logout
                       </div>
+
+
+                      <Badge badgeContent={4} color="primary">
+                        <ShoppingCartIcon color="action" sx={{ color: 'white', my: 'auto', ml: 2, cursor: 'pointer' }} />
+                      </Badge>
+
                     </>
                   ) : (
                     <>

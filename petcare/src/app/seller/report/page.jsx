@@ -1,10 +1,10 @@
-import Report from '@/shared/components/report/Report';
+import Report from '../../../shared/components/report/Report';
 import React from 'react';
 
 const Page = () => {
   return (
     <div>
-      <Report type='seller'/>
+      <Report type='seller' />
     </div>
   );
 };

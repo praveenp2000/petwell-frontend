@@ -1,14 +1,16 @@
 'use client';
-import { PreviewModal } from '@/shared/components/Modal/PreviewModal';
-import { EditModal } from '@/shared/components/Modal/EditModal';
+import { PreviewModal } from '../../../shared/components/Modal/PreviewModal';
+import { EditModal } from '../../../shared/components/Modal/EditModal';
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import Pagination from '@mui/material/Pagination';
-import LoadingScreen from '@/shared/components/LoadingScreen/LoadingScreen';
+import LoadingScreen from '../../../shared/components/LoadingScreen/LoadingScreen';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { HealthModal } from '@/shared/components/Modal/HealthModal';
+import { HealthModal } from '../../../shared/components/Modal/HealthModal';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
+import { Button } from '@mui/material';
+import { AddForms } from './AddForms';
 
 const Page = () => {
   const [pageSize, setPageSize] = useState(10);
@@ -19,6 +21,7 @@ const Page = () => {
   const [editOpen, setEditOpen] = useState(false);
   const [previewData, setPreviewData] = useState([]);
   const [healthOpen, setHealthOpen] = useState(false);
+  const [openForm, setOpenForm] = useState(false);
 
   const storedUser = sessionStorage.getItem('user');
   const userData = JSON.parse(storedUser);
@@ -30,6 +33,22 @@ const Page = () => {
     customer_id: user_id,
   };
 
+  const storeAdoption = async () => {
+    try {
+      const response = await axios.post(
+        'http://127.0.0.1:8000/getalladoptionbycustomer/',
+        payload
+      );
+      setPetData(response.data);
+      setTotalRecords(response.data.total_records);
+    } catch (error) {
+      console.error(
+        '❌ Error saving adoption:',
+        error.response ? error.response.data : error.message
+      );
+    }
+  };
+
   useEffect(() => {
     const storeAdoption = async () => {
       try {
@@ -37,7 +56,6 @@ const Page = () => {
           'http://127.0.0.1:8000/getalladoptionbycustomer/',
           payload
         );
-        console.log('✅ Customer saved successfully:', response.data);
         setPetData(response.data);
         setTotalRecords(response.data.total_records);
       } catch (error) {
@@ -53,14 +71,34 @@ const Page = () => {
   if (petData.length === 0) return <LoadingScreen />;
 
   const handleChange = (event, value) => {
-    console.log('lol', value);
     setPage(value);
   };
 
+  const updateAdoptionStatus = async (adoptionId) => {
+
+    const response = await axios.put(
+      `http://127.0.0.1:8000/editadoption/`,
+      { adopted: true, aid: adoptionId }, // Send only the field that needs updating
+    );
+
+    if (response.data === 'Update successfully') {
+      alert("Pet marked as adopted!");
+      storeAdoption();
+    }
+
+  };
+
   return (
-    <div className='h-auto'>
+    <div className='h-auto min-h-[640px]'>
       <div className='flex justify-between my-auto font-[Poppins] w-full'>
         <h4 className='text-center text-[#ECDFCC]'>Adoptions</h4>
+        <Button
+          sx={{ height: 36, textTransform: 'capitalize' }}
+          variant='contained'
+          onClick={() => setOpenForm(true)}
+        >
+          Add Pet For Adoption
+        </Button>
         <div className='text-center justify-center'>
           <div className='w-20 mb-4'>
             <select
@@ -85,6 +123,7 @@ const Page = () => {
               <th className='w-[250px]'>Animal</th>
               <th className='w-[250px]'>Age</th>
               <th>Action</th>
+              <th>Adoption Status</th>
             </tr>
           </thead>
           <tbody>
@@ -94,7 +133,7 @@ const Page = () => {
                 <td>{data.breed}</td>
                 <td>{data.animal}</td>
                 <td>{data.age}</td>
-                <td className='flex gap-x-2 h-[73.5px] py-auto'>
+                <td className='flex gap-x-2 h-[73.5px] my-auto '>
                   {/* <EditIcon
                     sx={{
                       height: 20,
@@ -127,6 +166,29 @@ const Page = () => {
                       setPreviewOpen(true);
                     }}
                   />
+                </td>
+
+                <td className='h-[73.5px] my-auto '>
+                  {
+                    !data?.adopted ? (
+                      <Button
+                        sx={{ height: 36, textTransform: 'capitalize', backgroundColor: 'green' }}
+                        variant='contained'
+                        onClick={() => updateAdoptionStatus(data.aid)}
+                      >
+                        Adopted
+                      </Button>
+                    ) : (
+                      <Button
+                        sx={{ height: 36, textTransform: 'capitalize', backgroundColor: 'green' }}
+                        variant='contained'
+                        onClick={() => updateAdoptionStatus(data.aid)}
+                        disabled
+                      >
+                        Adopted
+                      </Button>
+                    )
+                  }
                 </td>
               </tr>
             ))}
@@ -168,6 +230,12 @@ const Page = () => {
           open={healthOpen}
         />
       )}
+
+      <AddForms
+        getAllAdoptions={() => storeAdoption()}
+        open={openForm}
+        handleClose={() => setOpenForm(false)}
+      />
     </div>
   );
 };

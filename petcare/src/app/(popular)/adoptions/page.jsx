@@ -1,6 +1,6 @@
 'use client';
 
-import LoadingScreen from '@/shared/components/LoadingScreen/LoadingScreen';
+import LoadingScreen from '../../../shared/components/LoadingScreen/LoadingScreen';
 import { Pagination } from '@mui/material';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
@@ -52,7 +52,7 @@ const Page = () => {
                     'http://127.0.0.1:8000/getalladoption/',
                     payload
                 );
-                console.log('✅ Customer saved successfully:', response.data);
+               
                 setProductData(response.data);
                 setTotalRecords(response.data.total_records);
             } catch (error) {

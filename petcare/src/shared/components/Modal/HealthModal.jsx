@@ -23,9 +23,7 @@ const style = {
 };
 
 export const HealthModal = (_props) => {
-    console.log('open', _props);
     const [healthData, setHealthData] = useState([]);
-
     useEffect(() => {
         const getCustId = async () => {
             try {
@@ -44,7 +42,7 @@ export const HealthModal = (_props) => {
             getCustId();
     }, [_props]);
 
-    console.log('poool', healthData);
+
     return (
         <Modal
             aria-labelledby='transition-modal-title'

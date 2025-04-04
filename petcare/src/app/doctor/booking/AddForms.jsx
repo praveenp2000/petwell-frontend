@@ -45,7 +45,6 @@ export const AddHealthForms = (_props) => {
         const cust = await axios.get(
           'http://127.0.0.1:8000/getcustomeridfrompetid/' + _props.id
         );
-        console.log('poool', cust);
         setPayLoad((prevState) => ({
           ...prevState,
           customer_id: cust.data.cid,
@@ -60,7 +59,6 @@ export const AddHealthForms = (_props) => {
       getCustId();
   }, [_props]);
 
-  console.log('payload', payLoad);
   const handleChange = (field, value) => {
     setPayLoad((prevData) => ({
       ...prevData,
