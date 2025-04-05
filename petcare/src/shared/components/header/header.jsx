@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Register from '../Modal/Register';
 import Login from '../Modal/Login';
 import { useGlobalState } from '../globalState/GlobalStateProvider';
@@ -8,12 +8,14 @@ import { useRouter } from 'next/navigation';
 import { ContactUs } from '../Modal/contactus';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Badge } from '@mui/material';
+import axios from 'axios';
 
 export default function Header(_props) {
   const [openRegister, setOpenRegister] = useState(false);
   const [openLogin, setOpenLogin] = useState(false);
   const [openContactUs, setOpenContactUs] = useState(false);
   const { user, setUser } = useGlobalState();
+  const [cart, setCart] = useState([]);
 
   const storedUser = sessionStorage.getItem('user');
   const router = useRouter();
@@ -28,6 +30,17 @@ export default function Header(_props) {
     if (typeof userData?.sid != 'undefined') return '/seller/report';
     if (typeof userData?.doctorid != 'undefined') return '/doctor/health';
   };
+
+  useEffect(() => {
+    const getcart = async (e) => {
+      const response = await axios.get(
+        'http://127.0.0.1:8000/getcartbyCustomerId/' + userData?.cid
+
+      );
+      setCart(response.data);
+    };
+    if (typeof userData?.cid != 'undefined') getcart();
+  }, []);
 
   return (
     <>
@@ -124,10 +137,17 @@ export default function Header(_props) {
                         Logout
                       </div>
 
+                      {typeof userData?.cid != 'undefined' && cart.length > 0 && (
+                        <Link
+                          href={'/customer/cart'}
+                          className='nav-item nav-link my-auto cursor-pointer'
+                        >
+                          <Badge badgeContent={cart.length} color="primary">
+                            <ShoppingCartIcon color="action" sx={{ color: 'white', my: 'auto', ml: 2, cursor: 'pointer' }} />
+                          </Badge>
+                        </Link>
+                      )}
 
-                      <Badge badgeContent={4} color="primary">
-                        <ShoppingCartIcon color="action" sx={{ color: 'white', my: 'auto', ml: 2, cursor: 'pointer' }} />
-                      </Badge>
 
                     </>
                   ) : (

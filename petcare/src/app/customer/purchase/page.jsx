@@ -7,6 +7,25 @@ import Pagination from '@mui/material/Pagination';
 import LoadingScreen from '../../../shared/components/LoadingScreen/LoadingScreen';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop';
+import Link from 'next/link';
+import { Invoice } from '../../../shared/components/invoice/Invoice';
+import { Backdrop, Box, Fade, Modal } from '@mui/material';
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 730,
+  bgcolor: '#F4EEE0',
+  boxShadow: 24,
+  outline: 'none',
+  border: 'none',
+  p: 4,
+  overflowY: 'auto',
+  maxHeight: '65vh',
+};
 
 const Page = () => {
   const [pageSize, setPageSize] = useState(10);
@@ -16,6 +35,7 @@ const Page = () => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const [previewData, setPreviewData] = useState([]);
+  const [printOpen, setPrintOpen] = useState(false);
 
   const payload = {
     page_size: pageSize,
@@ -70,23 +90,22 @@ const Page = () => {
         <table>
           <thead>
             <tr>
-              <th>No</th>
+              <th>Id </th>
               <th className='w-[250px]'>Date</th>
               <th>Paid</th>
-              <th className='w-[250px]'>Delivery status</th>
-              <th>Product id</th>
+              <th className='w-[250px]'>Status</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
             {purchaseData.data.map((data, index) => (
               <tr key={index}>
-                <td>{index + 1}</td>
+                <td>{data.purchaseid}</td>
                 <td>{data.date}</td>
-                <td>{data.paid}</td>
+                <td>{data.payed ? 'Yes' : 'No'}</td>
                 <td>{data.delivery_status}</td>
                 <td className='flex gap-x-2 h-[73.5px] py-auto'>
-                  <EditIcon
+                  {/* <EditIcon
                     sx={{
                       height: 20,
                       width: 20,
@@ -101,7 +120,22 @@ const Page = () => {
                       setPreviewData(data);
                       setEditOpen(true);
                     }}
-                  />
+                  /> */}
+
+                  <LocalPrintshopIcon
+                    onClick={() => { setPrintOpen(true); setPreviewData(data); }}
+                    sx={{
+                      height: 20,
+                      width: 20,
+                      cursor: 'pointer',
+                      marginY: 'auto',
+                      '&:hover': {
+                        color: '#1989ce',
+                        transform: 'scale(1.1)',
+                      },
+
+                    }} />
+
                   <VisibilityIcon
                     sx={{
                       height: 20,
@@ -149,7 +183,37 @@ const Page = () => {
             data={previewData}
           />
         )}
-      </div>
+
+        {printOpen &&
+          <Modal
+            aria-labelledby='transition-modal-title'
+            aria-describedby='transition-modal-description'
+            open={printOpen}
+            onClose={() => setPrintOpen(false)}
+            closeAfterTransition
+            slots={{ backdrop: Backdrop }}
+            slotProps={{
+              backdrop: {
+                timeout: 500,
+              },
+            }}
+
+          >
+            <Fade in={printOpen} >
+              <Box style={style} sx={{
+                backgroundColor: 'white'
+              }}>
+                <Invoice
+                  cart={previewData}
+                />
+              </Box>
+            </Fade>
+          </Modal>
+        }
+
+
+
+      </div >
     </>
   );
 };

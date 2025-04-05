@@ -3,45 +3,48 @@
 import LoadingScreen from '../../../shared/components/LoadingScreen/LoadingScreen';
 import { Pagination } from '@mui/material';
 import axios from 'axios';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 const ProductCard = ({ product }) => {
   return (
     <div className='bg-white rounded-2xl shadow-lg overflow-hidden hover:cursor-pointer hover:scale-105 transition-transform duration-300 font-[Poppins]'>
-      <img
-        src={'http://127.0.0.1:8000' + product.image}
-        alt={product.name}
-        className='w-full h-48 object-cover'
-      />
-      <div className='p-4'>
-        <h2 className='text-xl font-semibold text-gray-800 font-[Poppins]'>
-          {product.name}
-        </h2>
-        <p className='text-gray-600 font-[Poppins]'>
-          {product.animal} - {product.producttype}
-        </p>
+      <Link href={{ pathname: `/products/${product.productid}`, query: { pid: product.productid } }} className='!no-underline' >
+        <img
+          src={'http://127.0.0.1:8000' + product.image}
+          alt={product.name}
+          className='w-full h-48 object-cover'
+        />
+        <div className='p-4'>
+          <h2 className='text-xl font-semibold text-gray-800 font-[Poppins]'>
+            {product.name}
+          </h2>
+          <p className='text-gray-600 font-[Poppins]'>
+            {product.animal} - {product.producttype}
+          </p>
 
-        <div className='flex items-center justify-between mt-3'>
-          <span className='text-lg font-bold text-blue-600 font-[Poppins]'>
-            ${product.price}
-          </span>
-          <span className='text-sm text-gray-500 font-[Poppins]'>
-            In Stock: {product.quantity}
-          </span>
+          <div className='flex items-center justify-between mt-3'>
+            <span className='text-lg font-bold text-blue-600 font-[Poppins]'>
+              ${product.price}
+            </span>
+            <span className='text-sm text-gray-500 font-[Poppins]'>
+              In Stock: {product.quantity}
+            </span>
+          </div>
+
+          <div className='flex items-center mt-2'>
+            {Array.from({ length: 5 }).map((_, index) => (
+              <span key={index}>{index < product.rating ? '⭐' : '☆'}</span>
+            ))}
+          </div>
+
+          <button
+            className={`font-[Poppins] mt-4 w-full py-2 rounded-lg text-white bg-green-500  hover:opacity-90 transition-opacity`}
+          >
+            Buy
+          </button>
         </div>
-
-        <div className='flex items-center mt-2'>
-          {Array.from({ length: 5 }).map((_, index) => (
-            <span key={index}>{index < product.rating ? '⭐' : '☆'}</span>
-          ))}
-        </div>
-
-        <button
-          className={`font-[Poppins] mt-4 w-full py-2 rounded-lg text-white bg-green-500  hover:opacity-90 transition-opacity`}
-        >
-          Buy
-        </button>
-      </div>
+      </Link>
     </div>
   );
 };

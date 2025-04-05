@@ -118,6 +118,70 @@ const Page = () => (
           </div>
         </div>
       </div>
+
+
+
+
+      <div className="bg-white text-gray-800">
+        <div className="container mx-auto px-4 py-16">
+          <div className="text-center mb-10">
+            <h2 className="text-4xl font-bold text-[#1989ce] mb-2">Start Selling on PetCare</h2>
+            <p className="text-lg text-gray-600">Turn your passion for pets into profit.</p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-10 items-center">
+            <div>
+              <img src={"/img/img12.jpg"} alt="Sell Products" className="rounded-lg shadow-md" />
+            </div>
+            <div>
+              <ol className="list-decimal list-inside space-y-4 text-lg">
+                <li><span className="font-semibold text-[#1989ce]">Signup</span> to create your seller account.</li>
+                <li><span className="font-semibold text-[#1989ce]">Sign In</span> to access your dashboard.</li>
+                <li><span className="font-semibold text-[#1989ce]">Add Products</span> related to pet care, grooming, or wellness.</li>
+                <li><span className="font-semibold text-[#1989ce]">Get Approved</span> by our admin team for quality check.</li>
+                <li><span className="font-semibold text-[#1989ce]">Start Selling</span> and reach thousands of pet lovers!</li>
+              </ol>
+
+              <div className="mt-8">
+                <a href="/seller-login" className="inline-block bg-[#1989ce] hover:bg-blue-700 text-white text-lg font-medium py-2 px-6 rounded transition duration-300">
+                  Login to Start Selling
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-gray-100 py-10">
+          <div className="container mx-auto text-center">
+            <h3 className="text-3xl font-bold mb-3 text-[#1989ce]">Why Sell With Us?</h3>
+            <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
+              Join a trusted platform dedicated to pet lovers. We help you manage orders, reach a loyal customer base, and grow your business with ease.
+            </p>
+
+            <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-6">
+              <div className="bg-white p-6 rounded shadow">
+                <h4 className="text-lg font-semibold text-green-600">Zero Listing Fee</h4>
+                <p className="text-sm text-gray-500">Add your products for free.</p>
+              </div>
+              <div className="bg-white p-6 rounded shadow">
+                <h4 className="text-lg font-semibold text-green-600">Admin Verified</h4>
+                <p className="text-sm text-gray-500">Only quality products go live.</p>
+              </div>
+              <div className="bg-white p-6 rounded shadow">
+                <h4 className="text-lg font-semibold text-green-600">Customer Support</h4>
+                <p className="text-sm text-gray-500">We're here 24/7 for you and your customers.</p>
+              </div>
+              <div className="bg-white p-6 rounded shadow">
+                <h4 className="text-lg font-semibold text-green-600">Fast Payouts</h4>
+                <p className="text-sm text-gray-500">Get paid quickly & securely.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
     </div>
   </div>
 );

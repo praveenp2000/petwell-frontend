@@ -69,7 +69,7 @@ export const PreviewModal = (_props) => {
                   <span className='grid grid-cols-2'>
                     <strong className='capitalize'>{key}: </strong>
                     <span>
-                      {key === 'approved' ? (value ? 'Yes' : 'No') : value}
+                      {(key === 'approved' ? (value ? 'Yes' : 'No') : value) || (key === 'payed' ? (value ? 'Yes' : 'No') : value)}
                     </span>
                   </span>
                 )}
