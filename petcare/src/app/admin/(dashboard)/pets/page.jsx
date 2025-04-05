@@ -48,7 +48,7 @@ const Page = () => {
   };
 
   return (
-    <>
+    <div className='min-h-[100vh] h-auto'>
       <div className='flex justify-between my-auto font-[Poppins] w-full'>
         <h4 className='text-center text-[#ECDFCC]'>Pet Details</h4>
         <div className='text-center justify-center'>
@@ -83,7 +83,7 @@ const Page = () => {
                 <td>{data.name}</td>
                 <td>{data.age}</td>
                 <td className='flex gap-x-2 h-[73.5px] py-auto'>
-                  <EditIcon
+                  {/* <EditIcon
                     sx={{
                       height: 20,
                       width: 20,
@@ -98,7 +98,7 @@ const Page = () => {
                       setPreviewData(data);
                       setEditOpen(true);
                     }}
-                  />
+                  /> */}
                   <VisibilityIcon
                     sx={{
                       height: 20,
@@ -147,7 +147,7 @@ const Page = () => {
           />
         )}
       </div>
-    </>
+    </div>
   );
 };
 

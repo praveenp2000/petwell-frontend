@@ -14,6 +14,8 @@ const Page = () => (
       </a>
     </div>
 
+    <Login open={openLogin} handleClose={() => setOpenLogin(false)} type={'customer'} />
+
   </div>
 );
 

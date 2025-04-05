@@ -1,4 +1,5 @@
 'use client';
+
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import Register from '../Modal/Register';
@@ -109,12 +110,12 @@ export default function Header(_props) {
                   >
                     Service
                   </Link>
-                  <div
+                  {/* <div
                     onClick={() => setOpenContactUs(true)}
                     className='nav-item nav-link !text-white hover:bg-[#1989ce]'
                   >
                     Contact
-                  </div>
+                  </div> */}
                 </div>
                 <div className='mr-auto py-0 flex'>
                   {loggedIn ? (
@@ -176,11 +177,11 @@ export default function Header(_props) {
         open={openRegister}
         handleClose={() => setOpenRegister(false)}
       />
-      <ContactUs
+      {/* <ContactUs
         open={openContactUs}
         handleClose={() => setOpenContactUs(false)}
-      />
-      <Login open={openLogin} handleClose={() => setOpenLogin(false)} />
+      /> */}
+      <Login open={openLogin} handleClose={() => setOpenLogin(false)} type={'customer'} />
     </>
   );
 }

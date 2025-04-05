@@ -85,7 +85,7 @@ const Page = () => {
                 <td>{data.date}</td>
                 <td>{data.booking_type}</td>
                 <td className='flex gap-x-2 h-[73.5px] py-auto'>
-                  <EditIcon
+                  {/* <EditIcon
                     sx={{
                       height: 20,
                       width: 20,
@@ -100,7 +100,7 @@ const Page = () => {
                       setPreviewData(data);
                       setEditOpen(true);
                     }}
-                  />
+                  /> */}
                   <VisibilityIcon
                     sx={{
                       height: 20,

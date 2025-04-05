@@ -61,12 +61,12 @@ export default function Footer() {
                     <ChevronRightIcon />
                     Our Team
                   </Link> */}
-                  <div
+                  {/* <div
                     onClick={() => setOpenContactUs(true)}
                     className='nav-item nav-link !text-white hover:bg-[#1989ce]'
                   >
                     Contact Us
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
@@ -87,7 +87,7 @@ export default function Footer() {
           </div>
           <div className='col-md-6 text-center text-md-right flex'>
             <ul className='nav d-inline-flex flex'>
-              <li className='nav-item'>
+              {/* <li className='nav-item'>
                 <Link
                   className='nav-link text-white py-0 hover:!underline'
                   href='/privacy-policy'
@@ -102,7 +102,7 @@ export default function Footer() {
                 >
                   Terms
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>

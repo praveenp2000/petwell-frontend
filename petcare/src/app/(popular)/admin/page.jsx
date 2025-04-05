@@ -5,7 +5,6 @@ import { Alert, Box, Button, Divider, TextField, Typography } from "@mui/materia
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Register } from "./Register";
 
 const Page = () => {
 
@@ -13,7 +12,6 @@ const Page = () => {
   const [password, setPassword] = useState('');
   const [loginData, setLoginData] = useState('');
   const [showAlert, setShowAlert] = useState(false);
-  const [openRegister, setOpenRgister] = useState(false);;
   const [status, setStatus] = useState(0);
   const { user, setUser } = useGlobalState();
   const router = useRouter();
@@ -29,13 +27,13 @@ const Page = () => {
 
   const submitData = async () => {
     try {
-      const response = await axios.post('http://127.0.0.1:8000/sellerlogin/', payload);
+      const response = await axios.post('http://127.0.0.1:8000/adminlogin/', payload);
       setLoginData(response.data);
       if (response.data.message === 'Login successfull') {
         setStatus(1);
         setUser(response.data.data);
         sessionStorage.setItem('user', JSON.stringify(response.data.data));
-        router.push('/seller/report');
+        router.push('/admin/report');
       } else {
         setStatus(2);
         setShowAlert(true);
@@ -108,9 +106,7 @@ const Page = () => {
         <Divider sx={{ my: 2 }} />
 
         <Box sx={{ display: 'flex', columnGap: 3, justifyContent: 'end' }}>
-          <Button variant='outlined' onClick={() => setOpenRgister(true)}>
-            Register
-          </Button>
+
           <Button variant='contained' onClick={() => submitData()}>
             Login
           </Button>
@@ -124,10 +120,6 @@ const Page = () => {
           )}
         </Box>
       </Box>
-
-      {openRegister &&
-        <Register open={openRegister} handleClose={() => setOpenRgister(false)} />
-      }
 
     </div>
 

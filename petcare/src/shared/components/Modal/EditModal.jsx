@@ -91,7 +91,7 @@ export const EditModal = (_props) => {
               </Typography>
 
               <TextField
-                disabled={key === 'image' || key.endsWith("id")}
+                disabled={key === 'image' || key.endsWith("id") || key === 'approved'}
                 sx={{ my: 'auto' }}
                 id='standard-basic'
                 defaultValue={value}
