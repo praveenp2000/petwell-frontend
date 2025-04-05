@@ -73,14 +73,14 @@ const Login = (_props) => {
     }
 
     try {
-      const response = await axios.post(apiUrl, payload);
+      const response = await axios.post('http://127.0.0.1:8000/customerlogin/', payload);
       setLoginData(response.data);
       if (response.data.message === 'Login successfull') {
         setStatus(1);
         setUser(response.data.data);
         sessionStorage.setItem('user', JSON.stringify(response.data.data));
         _props.handleClose();
-        router.push(navigationUrl);
+        router.push('/customer/booking');
       } else {
         setStatus(2);
         setShowAlert(true);
@@ -123,7 +123,7 @@ const Login = (_props) => {
               {'Login '}
             </Typography>
 
-            <div className='w-full mb-4'>
+            {/* <div className='w-full mb-4'>
               <select
                 onChange={(event) => setUserType(event.target.value)}
                 value={userType}
@@ -134,7 +134,7 @@ const Login = (_props) => {
                 <option value={'Doctor'}>{'Doctor'}</option>
                 <option value={'Admin'}>{'Admin'}</option>
               </select>
-            </div>
+            </div> */}
 
             <Box
               sx={{

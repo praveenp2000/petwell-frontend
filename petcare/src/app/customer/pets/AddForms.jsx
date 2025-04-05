@@ -12,6 +12,8 @@ import {
 import axios from 'axios';
 import { useState } from 'react';
 
+import validator from 'validator';
+
 const style = {
   position: 'absolute',
   top: '50%',
@@ -34,7 +36,7 @@ export const AddForms = (_props) => {
 
   const [payLoad, setPayLoad] = useState({
     name: '',
-    age: '',
+    age: 2,
     gender: '',
     animal: '',
     breed: '',
@@ -57,7 +59,7 @@ export const AddForms = (_props) => {
     const response = await axios.post('http://127.0.0.1:8000/addpet/', payLoad);
 
     if (response?.data === 'Added successfully') {
-      alert('Booked successfully!');
+      alert('Pet Added successfully!');
       _props.getAllPets();
       _props.handleClose();
     }
@@ -92,29 +94,36 @@ export const AddForms = (_props) => {
             <Typography sx={{ fontFamily: 'Poppins', color: '#393646', my: 'auto' }}>
               <strong className='capitalize'>Name</strong>
             </Typography>
-            <TextField
-              sx={{ my: 'auto' }}
-              name='name'
-              value={payLoad.name}
-              onChange={(e) => handleChange('name', e.target.value)}
-              variant='outlined'
-              size='small'
-            />
+            <div>
+              <TextField
+                sx={{ my: 'auto' }}
+                name='name'
+                value={payLoad.name}
+                onChange={(e) => handleChange('name', e.target.value)}
+                variant='outlined'
+                size='small'
+              />
+              {validator.isEmpty(payLoad.name) && <div className="text-red-500 mt-1 pl-2">Name required</div>}
+
+            </div>
+
           </Box>
 
           <Box sx={{ mt: 2, display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
             <Typography sx={{ fontFamily: 'Poppins', color: '#393646', my: 'auto' }}>
               <strong className='capitalize'>Age</strong>
             </Typography>
-            <TextField
-              sx={{ my: 'auto' }}
-              name='age'
-              type='number'
-              value={payLoad.age}
-              onChange={(e) => handleChange('age', Number(e.target.value))}
-              variant='outlined'
-              size='small'
-            />
+            <div>
+              <TextField
+                sx={{ my: 'auto' }}
+                name='age'
+                type='number'
+                value={payLoad.age}
+                onChange={(e) => handleChange('age', Number(e.target.value))}
+                variant='outlined'
+                size='small'
+              />
+            </div>
           </Box>
 
           <Box
@@ -183,28 +192,37 @@ export const AddForms = (_props) => {
             <Typography sx={{ fontFamily: 'Poppins', color: '#393646', my: 'auto' }}>
               <strong className='capitalize'>Breed</strong>
             </Typography>
-            <TextField
-              sx={{ my: 'auto' }}
-              name='breed'
-              value={payLoad.breed}
-              onChange={(e) => handleChange('breed', e.target.value)}
-              variant='outlined'
-              size='small'
-            />
+            <div>
+              <TextField
+                sx={{ my: 'auto' }}
+                name='breed'
+                value={payLoad.breed}
+                onChange={(e) => handleChange('breed', e.target.value)}
+                variant='outlined'
+                size='small'
+              />
+              {validator.isEmpty(payLoad.breed) && <div className="text-red-500 mt-1 pl-2">Breed required</div>}
+
+            </div>
           </Box>
 
           <Box sx={{ mt: 2, display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
             <Typography sx={{ fontFamily: 'Poppins', color: '#393646', my: 'auto' }}>
               <strong className='capitalize'>Color</strong>
             </Typography>
-            <TextField
-              sx={{ my: 'auto' }}
-              name='color'
-              value={payLoad.color}
-              onChange={(e) => handleChange('color', e.target.value)}
-              variant='outlined'
-              size='small'
-            />
+            <div>
+              <TextField
+                sx={{ my: 'auto' }}
+                name='color'
+                value={payLoad.color}
+                onChange={(e) => handleChange('color', e.target.value)}
+                variant='outlined'
+                size='small'
+              />
+              <div>
+                {validator.isEmpty(payLoad.color) && <div className="text-red-500 mt-1 pl-2">Color required</div>}
+              </div>
+            </div>
           </Box>
 
           <Divider sx={{ my: 2 }} />
@@ -213,12 +231,12 @@ export const AddForms = (_props) => {
             <Button variant='outlined' onClick={_props.handleClose}>
               Cancel
             </Button>
-            <Button variant='contained' type='submit'>
+            <Button variant='contained' type='submit' disabled={validator.isEmpty(payLoad.name) || validator.isEmpty(payLoad.breed) || validator.isEmpty(payLoad.color)}>
               Save
             </Button>
           </Box>
         </Box>
       </Fade>
-    </Modal>
+    </Modal >
   );
 };

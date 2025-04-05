@@ -2,6 +2,7 @@
 import { Button, TextField, Typography } from "@mui/material";
 import axios from "axios";
 import { useState } from "react";
+import validator from 'validator';
 
 const Page = () => {
 
@@ -59,6 +60,7 @@ const Page = () => {
                         variant='outlined'
                         size='small'
                     />
+                    {validator.isEmpty(payLoad.current_password) && <div className="text-red-500 mt-1 pl-2">Current Password required</div>}
                 </div>
 
                 <div className="mt-7">
@@ -81,9 +83,10 @@ const Page = () => {
                         variant='outlined'
                         size='small'
                     />
+                    {validator.isEmpty(payLoad.password) && <div className="text-red-500 mt-1 pl-2">New Password required</div>}
                 </div>
 
-                <Button variant='contained' onClick={() => submitData()} sx={{ mt: 4 }}>
+                <Button variant='contained' onClick={() => submitData()} sx={{ mt: 4 }} disabled={validator.isEmpty(payLoad.password) || validator.isEmpty(payLoad.current_password)}>
                     Update
                 </Button>
 

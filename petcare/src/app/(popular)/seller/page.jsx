@@ -48,7 +48,7 @@ const Page = () => {
   return (<div className="bg-gray-100 flex items-center justify-center h-[800px]">
 
     <div className="bg-white p-8 rounded-xl shadow-lg max-w-sm w-full text-center">
-      <h2 className="text-2xl font-bold mb-4 text-gray-800">Please Login</h2>
+      <h2 className="text-2xl font-bold mb-4 text-gray-800">Login for Seller</h2>
 
       <Box >
         <Box

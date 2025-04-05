@@ -143,7 +143,7 @@ const Page = () => (
               </ol>
 
               <div className="mt-8">
-                <a href="/seller-login" className="inline-block bg-[#1989ce] hover:bg-blue-700 text-white text-lg font-medium py-2 px-6 rounded transition duration-300">
+                <a href="/seller" className="inline-block bg-[#1989ce] hover:bg-blue-700 text-white text-lg font-medium py-2 px-6 rounded transition duration-300">
                   Login to Start Selling
                 </a>
               </div>

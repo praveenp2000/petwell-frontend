@@ -50,7 +50,7 @@ const Page = () => {
   };
 
   return (
-    <>
+    <div className='min-h-[100vh]'>
       <div className='flex justify-between my-auto font-[Poppins] w-full'>
         <h4 className='text-center text-[#ECDFCC]'>Pet Details</h4>
         <div className='text-center justify-center'>
@@ -157,7 +157,7 @@ const Page = () => {
             open={healthOpen} />
         )}
       </div>
-    </>
+    </div>
   );
 };
 

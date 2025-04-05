@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import validator from 'validator';
-import isEmail from 'validator/lib/isEmail';
+
 
 const style = {
   position: 'absolute',
@@ -163,25 +163,28 @@ export const Register = (_props) => {
                 sx={{ fontFamily: 'Poppins', color: '#393646', my: 'auto' }}
               >
                 <strong className='capitalize'>Password</strong>
-              </Typography>
 
-              <TextField
-                sx={{ my: 'auto' }}
-                type='password'
-                id='password'
-                onChange={(event) => {
-                  setPassword(event.target.value);
-                }}
-                defaultValue={password}
-                variant='outlined'
-                size='small'
-              />
+              </Typography>
+              <Box>
+                <TextField
+                  sx={{ my: 'auto' }}
+                  type='password'
+                  id='password'
+                  onChange={(event) => {
+                    setPassword(event.target.value);
+                  }}
+                  defaultValue={password}
+                  variant='outlined'
+                  size='small'
+                />
+                {validator.isEmpty(password) && <div className="text-red-500 mt-1 pl-2">Password required</div>}
+              </Box>
             </Box>
 
             <Divider sx={{ my: 2 }} />
 
             <Box sx={{ display: 'flex', columnGap: 3, justifyContent: 'end' }}>
-              <Button variant='outlined' onClick={() => submitData()} disabled={!validator.isEmail(email) || validator.isEmpty(name)}>
+              <Button variant='outlined' onClick={() => submitData()} disabled={!validator.isEmail(email) || validator.isEmpty(name) || validator.isEmpty(password)}>
                 Register
               </Button>
             </Box>

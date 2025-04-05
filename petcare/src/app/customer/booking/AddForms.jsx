@@ -60,6 +60,12 @@ export const AddForms = (_props) => {
   useEffect(() => {
     const getAvailableSlots = async (e) => {
       try {
+        const pageSize = 30;
+        const payload = {
+          page_size: pageSize,
+          current_page: page,
+          customer_id: user_id,
+        };
 
         const response = await axios.post(
           'http://127.0.0.1:8000/getavailableslots/',
@@ -69,7 +75,8 @@ export const AddForms = (_props) => {
           }
         );
         const pets = await axios.get(
-          'http://127.0.0.1:8000/getcustomerpets/' + user_id
+          'http://127.0.0.1:8000/getcustomerpets/',
+          payload
         );
         setPets(pets.data);
         if (typeof response?.data?.date != 'undefined') {

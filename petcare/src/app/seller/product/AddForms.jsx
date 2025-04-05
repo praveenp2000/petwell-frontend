@@ -11,6 +11,8 @@ import {
 } from '@mui/material';
 import { useState } from 'react';
 
+import validator from 'validator';
+
 const style = {
   position: 'absolute',
   top: '50%',
@@ -30,6 +32,7 @@ export const AddForms = ({ open, handleClose }) => {
   const storedUser = sessionStorage.getItem('user');
   const userData = JSON.parse(storedUser || '{}');
   const seller_id = userData.sid || '';
+  const [errors, setErrors] = useState({});
 
   const [payLoad, setPayLoad] = useState({
     seller_id: seller_id,
@@ -115,15 +118,24 @@ export const AddForms = ({ open, handleClose }) => {
               <Typography sx={{ fontFamily: 'Poppins', color: '#393646', my: 'auto' }}>
                 <strong className='capitalize'>{field}</strong>
               </Typography>
-              <TextField
-                sx={{ my: 'auto' }}
-                name={field}
-                value={payLoad[field]}
-                onChange={handleChange}
-                variant='outlined'
-                size='small'
-                type={field === 'price' || field === 'quantity' ? 'number' : 'text'}
-              />
+              <Box>
+                <TextField
+                  sx={{ my: 'auto' }}
+                  name={field}
+                  value={payLoad[field]}
+                  onChange={handleChange}
+                  variant='outlined'
+                  size='small'
+                  type={field === 'price' || field === 'quantity' ? 'number' : 'text'}
+
+                />
+                {validator.isEmpty(payLoad[field]) && (
+                  <div className='text-red-500 py-1'>
+                    Field Required
+                  </div>
+                )}
+
+              </Box>
             </Box>
           ))}
 
@@ -140,7 +152,7 @@ export const AddForms = ({ open, handleClose }) => {
             <Button variant='outlined' onClick={handleClose}>
               Cancel
             </Button>
-            <Button variant='contained' type='submit'>
+            <Button variant='contained' type='submit' disabled={validator.isEmpty(payLoad['name']) || validator.isEmpty(payLoad['price']) || validator.isEmpty(payLoad['quantity']) || validator.isEmpty(payLoad['animal']) || validator.isEmpty(payLoad['producttype'])}>
               Save
             </Button>
           </Box>
