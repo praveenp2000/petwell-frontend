@@ -12,6 +12,8 @@ import {
 import axios from 'axios';
 import { useState } from 'react';
 
+import validator from 'validator';
+
 const style = {
   position: 'absolute',
   top: '50%',
@@ -54,7 +56,6 @@ export const AddForms = (_props) => {
   //   }));
   // };
 
-
   const handleChange = (field, value) => {
     setPayLoad((prevData) => ({
       ...prevData,
@@ -62,27 +63,26 @@ export const AddForms = (_props) => {
     }));
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-
 
     const formData = new FormData();
     Object.entries(payLoad).forEach(([key, value]) => {
       formData.append(key, value);
     });
 
-    const response = await axios.post('http://127.0.0.1:8000/addadoption/', formData);
+    const response = await axios.post(
+      'http://127.0.0.1:8000/addadoption/',
+      formData
+    );
 
     if (response?.data === 'Added successfully') {
       alert('Booked successfully!');
       _props.getAllAdoptions();
       _props.handleClose();
-    }
-    else alert("Cannot Book");
+    } else alert('Cannot Book');
     _props.handleClose();
   };
-
 
   return (
     <Modal
@@ -102,11 +102,17 @@ export const AddForms = (_props) => {
         <Box sx={style} component='form' onSubmit={handleSubmit}>
           <Typography
             id='transition-modal-title'
-            sx={{ fontSize: 22, mb: 4, fontFamily: 'Poppins', fontWeight: 600, color: 'black', textAlign: 'center' }}
+            sx={{
+              fontSize: 22,
+              mb: 4,
+              fontFamily: 'Poppins',
+              fontWeight: 600,
+              color: 'black',
+              textAlign: 'center',
+            }}
           >
             Add Pet For adoption
           </Typography>
-
 
           <Box
             sx={{
@@ -129,12 +135,8 @@ export const AddForms = (_props) => {
                 className='z-10 cursor-pointer block w-full px-2 py-2 shadow-sm focus:ring-blue-500 focus:border-blue-500'
               >
                 <option value={1}>{'Choose Option'}</option>
-                <option value={'Dog'}>
-                  Dog
-                </option>
-                <option value={'Cat'}>
-                  Cat
-                </option>
+                <option value={'Dog'}>Dog</option>
+                <option value={'Cat'}>Cat</option>
               </select>
             </div>
           </Box>
@@ -160,61 +162,104 @@ export const AddForms = (_props) => {
                 className='z-10 cursor-pointer block w-full px-2 py-2 shadow-sm focus:ring-blue-500 focus:border-blue-500'
               >
                 <option value={1}>{'Choose Option'}</option>
-                <option value={'Male'}>
-                  Male
-                </option>
-                <option value={'Female'}>
-                  Female
-                </option>
+                <option value={'Male'}>Male</option>
+                <option value={'Female'}>Female</option>
               </select>
             </div>
           </Box>
 
-          <Box sx={{ mt: 2, display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
-            <Typography sx={{ fontFamily: 'Poppins', color: '#393646', my: 'auto' }}>
+          <Box
+            sx={{
+              mt: 2,
+              display: 'grid',
+              gridTemplateColumns: 'repeat(2, 1fr)',
+            }}
+          >
+            <Typography
+              sx={{ fontFamily: 'Poppins', color: '#393646', my: 'auto' }}
+            >
               <strong className='capitalize'>Breed</strong>
             </Typography>
-            <TextField
-              sx={{ my: 'auto' }}
-              name='breed'
-              value={payLoad.breed}
-              onChange={(e) => handleChange('breed', e.target.value)}
-              variant='outlined'
-              size='small'
-            />
+            <div>
+              <TextField
+                sx={{ my: 'auto' }}
+                name='breed'
+                value={payLoad.breed}
+                onChange={(e) => handleChange('breed', e.target.value)}
+                variant='outlined'
+                size='small'
+              />
+              {validator.isEmpty(payLoad.breed) && (
+                <div className='text-red-500 mt-1 pl-2'>Breed required</div>
+              )}
+            </div>
           </Box>
 
-          <Box sx={{ mt: 2, display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
-            <Typography sx={{ fontFamily: 'Poppins', color: '#393646', my: 'auto' }}>
+          <Box
+            sx={{
+              mt: 2,
+              display: 'grid',
+              gridTemplateColumns: 'repeat(2, 1fr)',
+            }}
+          >
+            <Typography
+              sx={{ fontFamily: 'Poppins', color: '#393646', my: 'auto' }}
+            >
               <strong className='capitalize'>Age</strong>
             </Typography>
-            <TextField
-              sx={{ my: 'auto' }}
-              name='age'
-              type='number'
-              value={payLoad.age}
-              onChange={(e) => handleChange('age', Number(e.target.value))}
-              variant='outlined'
-              size='small'
-            />
+            <div>
+              <TextField
+                sx={{ my: 'auto' }}
+                name='age'
+                type='number'
+                value={payLoad.age}
+                onChange={(e) => handleChange('age', Number(e.target.value))}
+                variant='outlined'
+                size='small'
+              />
+              {validator.isInt(payLoad.age) && (
+                <div className='text-red-500 mt-1 pl-2'>Age required</div>
+              )}
+            </div>
           </Box>
 
-          <Box sx={{ mt: 2, display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
-            <Typography sx={{ fontFamily: 'Poppins', color: '#393646', my: 'auto' }}>
+          <Box
+            sx={{
+              mt: 2,
+              display: 'grid',
+              gridTemplateColumns: 'repeat(2, 1fr)',
+            }}
+          >
+            <Typography
+              sx={{ fontFamily: 'Poppins', color: '#393646', my: 'auto' }}
+            >
               <strong className='capitalize'>Color</strong>
             </Typography>
-            <TextField
-              sx={{ my: 'auto' }}
-              name='color'
-              value={payLoad.color}
-              onChange={(e) => handleChange('color', e.target.value)}
-              variant='outlined'
-              size='small'
-            />
+            <div>
+              <TextField
+                sx={{ my: 'auto' }}
+                name='color'
+                value={payLoad.color}
+                onChange={(e) => handleChange('color', e.target.value)}
+                variant='outlined'
+                size='small'
+              />
+              {validator.isEmpty(payLoad.color) && (
+                <div className='text-red-500 mt-1 pl-2'>Color required</div>
+              )}
+            </div>
           </Box>
 
-          <Box sx={{ mt: 2, display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
-            <Typography sx={{ fontFamily: 'Poppins', color: '#393646', my: 'auto' }}>
+          <Box
+            sx={{
+              mt: 2,
+              display: 'grid',
+              gridTemplateColumns: 'repeat(2, 1fr)',
+            }}
+          >
+            <Typography
+              sx={{ fontFamily: 'Poppins', color: '#393646', my: 'auto' }}
+            >
               <strong className='capitalize'>Description </strong>
             </Typography>
             <TextField
@@ -229,22 +274,48 @@ export const AddForms = (_props) => {
             />
           </Box>
 
-          <Box sx={{ mt: 2, display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
-            <Typography sx={{ fontFamily: 'Poppins', color: '#393646', my: 'auto' }}>
+          <Box
+            sx={{
+              mt: 2,
+              display: 'grid',
+              gridTemplateColumns: 'repeat(2, 1fr)',
+            }}
+          >
+            <Typography
+              sx={{ fontFamily: 'Poppins', color: '#393646', my: 'auto' }}
+            >
               <strong className='capitalize'>Phone No </strong>
             </Typography>
-            <TextField
-              sx={{ my: 'auto' }}
-              name='phone'
-              value={payLoad.phone}
-              onChange={(e) => handleChange('phone', e.target.value)}
-              variant='outlined'
-              size='small'
-            />
+            <div>
+              <TextField
+                sx={{ my: 'auto' }}
+                name='phone'
+                value={payLoad.phone}
+                onChange={(e) => handleChange('phone', e.target.value)}
+                variant='outlined'
+                size='small'
+              />
+              {validator.isEmpty(payLoad.phone) && (
+                <div className='text-red-500 mt-1 pl-2'>Phone required</div>
+              )}
+              {!/^\d{10}$/.test(payLoad.phone) && (
+                <div className='text-red-500 mt-1 pl-2'>
+                  Enter a valid 10-digit phone number
+                </div>
+              )}
+            </div>
           </Box>
 
-          <Box sx={{ mt: 2, display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}>
-            <Typography sx={{ fontFamily: 'Poppins', color: '#393646', my: 'auto' }}>
+          <Box
+            sx={{
+              mt: 2,
+              display: 'grid',
+              gridTemplateColumns: 'repeat(2, 1fr)',
+            }}
+          >
+            <Typography
+              sx={{ fontFamily: 'Poppins', color: '#393646', my: 'auto' }}
+            >
               <strong className='capitalize'>Image</strong>
             </Typography>
             <input
@@ -262,7 +333,16 @@ export const AddForms = (_props) => {
             <Button variant='outlined' onClick={_props.handleClose}>
               Cancel
             </Button>
-            <Button variant='contained' type='submit'>
+            <Button
+              variant='contained'
+              type='submit'
+              disabled={
+                !validator.isEmpty(payLoad.age) ||
+                !validator.isEmpty(payLoad.breed) ||
+                !validator.isEmpty(payLoad.phone) ||
+                !validator.isEmpty(payLoad.color)
+              }
+            >
               Save
             </Button>
           </Box>

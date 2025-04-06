@@ -15,7 +15,7 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { styled } from '@mui/material/styles';
-import moment from "moment";
+import moment from 'moment';
 import axios from 'axios';
 
 const style = {
@@ -63,7 +63,7 @@ export const AddForms = (_props) => {
         const pageSize = 30;
         const payload = {
           page_size: pageSize,
-          current_page: page,
+          current_page: 1,
           customer_id: user_id,
         };
 
@@ -74,11 +74,11 @@ export const AddForms = (_props) => {
             booking_type: payLoad.booking_type,
           }
         );
-        const pets = await axios.get(
+        const pets = await axios.post(
           'http://127.0.0.1:8000/getcustomerpets/',
           payload
         );
-        setPets(pets.data);
+        setPets(pets.data.data);
         if (typeof response?.data?.date != 'undefined') {
           setAvailableSlots(response?.data);
         } else {
@@ -86,23 +86,12 @@ export const AddForms = (_props) => {
           alert('Error: ' + JSON.stringify(errorData));
         }
       } catch (error) {
-        alert('Network error: ' + error.message);
+        // alert('Network error: ' + error.message);
+        alert('Hai there');
       }
     };
     if (payLoad.date != '') getAvailableSlots();
   }, [payLoad.date, payLoad.booking_type]);
-
-
-  // const availableSlots = [
-  // '09:00 AM - 10:00 AM',
-  // '10:00 AM - 11:00 AM',
-  // '11:00 AM - 12:00 PM',
-  // '01:00 PM - 02:00 PM',
-  // '02:00 PM - 03:00 PM',
-  // '03:00 PM - 04:00 PM',
-  // '04:00 PM - 05:00 PM',
-  // '05:00 PM - 06:00 PM',
-  // ];
 
   const checkUps = ['General Checkup', 'Vaccination', 'Deworming'];
 
@@ -268,15 +257,15 @@ export const AddForms = (_props) => {
             >
               {payLoad.booking_type === 'Check up'
                 ? checkUps.map((slots) => (
-                  <option key={slots} value={slots}>
-                    {slots}
-                  </option>
-                ))
+                    <option key={slots} value={slots}>
+                      {slots}
+                    </option>
+                  ))
                 : services.map((slots) => (
-                  <option key={slots} value={slots}>
-                    {slots}
-                  </option>
-                ))}
+                    <option key={slots} value={slots}>
+                      {slots}
+                    </option>
+                  ))}
             </select>
           </Box>
 

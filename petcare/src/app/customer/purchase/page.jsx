@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop';
 import Link from 'next/link';
 import { Invoice } from '../../../shared/components/invoice/Invoice';
-import { Backdrop, Box, Fade, Modal } from '@mui/material';
+import { Backdrop, Box, Button, Fade, Modal } from '@mui/material';
 
 const style = {
   position: 'absolute',
@@ -67,6 +67,18 @@ const Page = () => {
     setPage(value);
   };
 
+  const cancelPurchase = async (id) => {
+    const response = await axios.post('http://127.0.0.1:8000/cancelpurchase/', {
+      purchaseid: id,
+    });
+
+    const response2 = await axios.post(
+      'http://127.0.0.1:8000/getallpurchase/',
+      payload
+    );
+    setPurchaseData(response2.data);
+  };
+
   return (
     <>
       <div className='flex justify-between my-auto font-[Poppins] w-full'>
@@ -94,6 +106,7 @@ const Page = () => {
               <th className='w-[250px]'>Date</th>
               <th>Paid</th>
               <th className='w-[250px]'>Status</th>
+              <th className='w-[250px]'>Cancelation</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -104,6 +117,18 @@ const Page = () => {
                 <td>{data.date}</td>
                 <td>{data.payed ? 'Yes' : 'No'}</td>
                 <td>{data.delivery_status}</td>
+                <td>
+                  <Button
+                    variant='contained'
+                    disabled={
+                      data.delivery_status === 'Delivered' ||
+                      data.delivery_status === 'Cancelled'
+                    }
+                    onClick={() => cancelPurchase(data.purchaseid)}
+                  >
+                    Cancel
+                  </Button>
+                </td>
                 <td className='flex gap-x-2 h-[73.5px] py-auto'>
                   {/* <EditIcon
                     sx={{
@@ -123,7 +148,10 @@ const Page = () => {
                   /> */}
 
                   <LocalPrintshopIcon
-                    onClick={() => { setPrintOpen(true); setPreviewData(data); }}
+                    onClick={() => {
+                      setPrintOpen(true);
+                      setPreviewData(data);
+                    }}
                     sx={{
                       height: 20,
                       width: 20,
@@ -133,8 +161,8 @@ const Page = () => {
                         color: '#1989ce',
                         transform: 'scale(1.1)',
                       },
-
-                    }} />
+                    }}
+                  />
 
                   <VisibilityIcon
                     sx={{
@@ -184,7 +212,7 @@ const Page = () => {
           />
         )}
 
-        {printOpen &&
+        {printOpen && (
           <Modal
             aria-labelledby='transition-modal-title'
             aria-describedby='transition-modal-description'
@@ -197,23 +225,20 @@ const Page = () => {
                 timeout: 500,
               },
             }}
-
           >
-            <Fade in={printOpen} >
-              <Box style={style} sx={{
-                backgroundColor: 'white'
-              }}>
-                <Invoice
-                  cart={previewData}
-                />
+            <Fade in={printOpen}>
+              <Box
+                style={style}
+                sx={{
+                  backgroundColor: 'white',
+                }}
+              >
+                <Invoice cart={previewData} />
               </Box>
             </Fade>
           </Modal>
-        }
-
-
-
-      </div >
+        )}
+      </div>
     </>
   );
 };

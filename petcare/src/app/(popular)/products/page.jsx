@@ -7,9 +7,21 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 const ProductCard = ({ product }) => {
+  const storedUser = sessionStorage.getItem('user');
+  const userData = JSON.parse(storedUser);
+
   return (
     <div className='bg-white rounded-2xl shadow-lg overflow-hidden hover:cursor-pointer hover:scale-105 transition-transform duration-300 font-[Poppins]'>
-      <Link href={{ pathname: `/products/${product.productid}`, query: { pid: product.productid } }} className='!no-underline' >
+      <Link
+        href={{
+          pathname:
+            typeof userData?.cid != 'undefined'
+              ? `/products/${product.productid}`
+              : '/customer-login',
+          query: { pid: product.productid },
+        }}
+        className='!no-underline'
+      >
         <img
           src={'http://127.0.0.1:8000' + product.image}
           alt={product.name}
@@ -88,7 +100,7 @@ const Page = () => {
   return (
     <div className='px-[90px]'>
       <h1 className='text-4xl font-bold text-center mb-10 text-gray-800 font-[Poppins] mt-10 '>
-        <span className='text-[#1989ce]'>Pet Care  </span>
+        <span className='text-[#1989ce]'>Pet Care </span>
         <span className='text-black'>Products</span>
       </h1>
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8'>
