@@ -1,3 +1,5 @@
+'use client';
+
 import {
   Backdrop,
   Box,
@@ -9,7 +11,11 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import React from 'react';
+
+import axios from 'axios';
+import React, { useState } from 'react';
+
+import validator from 'validator';
 
 const style = {
   position: 'absolute',
@@ -22,12 +28,42 @@ const style = {
   outline: 'none',
   border: 'none',
   p: 4,
+  height: 500,
+  overflowY: 'auto',
 };
 
 const Register = (_props) => {
-  // ('name','email','password','address','phone')
+  const [payLoad, setPayLoad] = useState({
+    name: '',
+    email: '',
+    password: '',
+    address: '',
+    phone: '',
+  });
+
+  const handleChange = (field, value) => {
+    setPayLoad((prevData) => ({
+      ...prevData,
+      [field]: value,
+    }));
+  };
+
+  const submitData = async () => {
+    const response = await axios.post(
+      'http://127.0.0.1:8000/customerregister/',
+      payLoad
+    );
+
+    if (response?.data === 'Added successfully') {
+      alert('Registered successfully!');
+      _props.handleClose();
+    } else alert('Cannot Register');
+    _props.handleClose();
+  };
+
   return (
     <Modal
+      sx={{ zIndex: 4000 }}
       aria-labelledby='transition-modal-title'
       aria-describedby='transition-modal-description'
       open={_props.open}
@@ -70,13 +106,19 @@ const Register = (_props) => {
               <strong className='capitalize'>Full Name</strong>
             </Typography>
 
-            <TextField
-              sx={{ my: 'auto' }}
-              id='standard-basic'
-              defaultValue={'name'}
-              variant='outlined'
-              size='small'
-            />
+            <div>
+              <TextField
+                sx={{ my: 'auto' }}
+                id='standard-basic'
+                defaultValue={payLoad.name}
+                onChange={(e) => handleChange('name', e.target.value)}
+                variant='outlined'
+                size='small'
+              />
+              {validator.isEmpty(payLoad.name) && (
+                <div className='text-red-500 mt-1 pl-2'>Name required</div>
+              )}
+            </div>
           </Box>
 
           <Box
@@ -93,14 +135,20 @@ const Register = (_props) => {
               <strong className='capitalize'>Email</strong>
             </Typography>
 
-            <TextField
-              sx={{ my: 'auto' }}
-              id='standard-basic'
-              type='email'
-              defaultValue={'email'}
-              variant='outlined'
-              size='small'
-            />
+            <div>
+              <TextField
+                sx={{ my: 'auto' }}
+                id='standard-basic'
+                type='email'
+                defaultValue={payLoad.email}
+                onChange={(e) => handleChange('email', e.target.value)}
+                variant='outlined'
+                size='small'
+              />
+              {!validator.isEmail(payLoad.email) && (
+                <div className='text-red-500 mt-1 pl-2'>Not a valid Email </div>
+              )}
+            </div>
           </Box>
 
           <Box
@@ -117,14 +165,22 @@ const Register = (_props) => {
               <strong className='capitalize'>Phone</strong>
             </Typography>
 
-            <TextField
-              sx={{ my: 'auto' }}
-              id='standard-basic'
-              type='phone'
-              defaultValue={'email'}
-              variant='outlined'
-              size='small'
-            />
+            <div>
+              <TextField
+                sx={{ my: 'auto' }}
+                id='standard-basic'
+                type='phone'
+                defaultValue={payLoad.phone}
+                onChange={(e) => handleChange('phone', e.target.value)}
+                variant='outlined'
+                size='small'
+              />
+              {!/^\d{10}$/.test(payLoad.phone) && (
+                <div className='text-red-500 mt-1 pl-2'>
+                  Enter a valid 10-digit phone number
+                </div>
+              )}
+            </div>
           </Box>
 
           <Box
@@ -141,16 +197,23 @@ const Register = (_props) => {
               <strong className='capitalize'>Password</strong>
             </Typography>
 
-            <TextField
-              sx={{ my: 'auto' }}
-              type='password'
-              id='standard-basic'
-              defaultValue={'email'}
-              variant='outlined'
-              size='small'
-            />
+            <div>
+              <TextField
+                sx={{ my: 'auto' }}
+                type='password'
+                id='standard-basic'
+                defaultValue={payLoad.password}
+                onChange={(e) => handleChange('password', e.target.value)}
+                variant='outlined'
+                size='small'
+              />
+              {validator.isEmpty(payLoad.password) && (
+                <div className='text-red-500 mt-1 pl-2'>Password required </div>
+              )}
+            </div>
           </Box>
 
+          {/* 
           <Box
             sx={{
               mt: 2,
@@ -173,7 +236,7 @@ const Register = (_props) => {
               variant='outlined'
               size='small'
             />
-          </Box>
+          </Box> */}
 
           <Box
             sx={{
@@ -189,15 +252,21 @@ const Register = (_props) => {
               <strong className='capitalize'>Address</strong>
             </Typography>
 
-            <TextField
-              multiline
-              maxRows={4}
-              sx={{ my: 'auto' }}
-              id='standard-basic'
-              defaultValue={'email'}
-              variant='outlined'
-              size='small'
-            />
+            <div>
+              <TextField
+                multiline
+                maxRows={4}
+                sx={{ my: 'auto' }}
+                id='standard-basic'
+                defaultValue={payLoad.address}
+                onChange={(e) => handleChange('address', e.target.value)}
+                variant='outlined'
+                size='small'
+              />
+              {validator.isEmpty(payLoad.address) && (
+                <div className='text-red-500 mt-1 pl-2'>Address required </div>
+              )}
+            </div>
           </Box>
 
           <Divider sx={{ my: 2 }} />
