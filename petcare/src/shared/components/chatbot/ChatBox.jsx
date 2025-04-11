@@ -1,6 +1,7 @@
 "use client";
 import CloseIcon from '@mui/icons-material/Close';
 import { Box } from '@mui/material';
+// import { fetch } from 'undici';
 
 import { useState } from "react";
 
@@ -15,12 +16,19 @@ const ChatBox = (_props) => {
         setLoading(true);
         setChat([...chat, { sender: "user", text: message }]);
 
+        // const controller = new AbortController();
+        // const timeout = setTimeout(() => controller.abort(), 12000000);
+
         try {
             const response = await fetch("/api/ollama-chat", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ message }),
+                // signal: controller.signal
             });
+
+            // clearTimeout(timeout);
+
 
             const data = await response.json();
             setChat([...chat, { sender: "user", text: message }, { sender: "bot", text: data.response }]);

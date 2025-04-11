@@ -36,17 +36,22 @@ const Page = () => {
   const [editOpen, setEditOpen] = useState(false);
   const [previewData, setPreviewData] = useState([]);
   const [printOpen, setPrintOpen] = useState(false);
+  const storedUser = sessionStorage.getItem('user');
+  const userData = JSON.parse(storedUser);
+  const user_id = userData.cid;
+
 
   const payload = {
     page_size: pageSize,
     current_page: page,
+    cid: user_id
   };
 
   useEffect(() => {
     const storeAdoption = async () => {
       try {
         const response = await axios.post(
-          'http://127.0.0.1:8000/getallpurchase/',
+          'http://127.0.0.1:8000/getallpurchasecust/',
           payload
         );
         setPurchaseData(response.data);
@@ -80,7 +85,7 @@ const Page = () => {
   };
 
   return (
-    <>
+    <div className='min-h-[100vh]'>
       <div className='flex justify-between my-auto font-[Poppins] w-full'>
         <h4 className='text-center text-[#ECDFCC]'>Purchase List</h4>
         <div className='text-center justify-center'>
@@ -239,7 +244,7 @@ const Page = () => {
           </Modal>
         )}
       </div>
-    </>
+    </div>
   );
 };
 

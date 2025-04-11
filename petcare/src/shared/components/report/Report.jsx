@@ -96,8 +96,8 @@ const Report = (_props) => {
                 </thead>
                 <tbody>
 
-                  {purchaseData?.seller_revenue.map((data) => (
-                    <tr className="border-b">
+                  {purchaseData?.seller_revenue.map((data, idx) => (
+                    <tr key={idx} className="border-b">
                       <td className="py-2">{data?.seller_name}</td>
                       <td className="py-2">₹{data?.total_revenue}</td>
                     </tr>

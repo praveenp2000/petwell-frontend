@@ -7,6 +7,7 @@ import SmartToyIcon from '@mui/icons-material/SmartToy';
 import { GlobalStateProvider } from '../shared/components/globalState/GlobalStateProvider';
 import Header from '../shared/components/header/header';
 import Footer from '../shared/components/footer/footer';
+import ChatBox from '../shared/components/chatbot/ChatBox';
 
 export default function RootLayout({ children }) {
   const pathname = usePathname();

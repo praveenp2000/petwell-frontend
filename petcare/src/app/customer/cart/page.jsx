@@ -38,7 +38,7 @@ const Page = () => {
             setCart(response.data);
         }
     };
-
+    console.log('item', cart)
 
     const deleteFromCart = async (cartId) => {
         try {
@@ -66,7 +66,7 @@ const Page = () => {
                 payed: paymentOption === "paynow",
                 delivery_status: "Order Placed",
                 quantity: item.quantity,
-                product_id: item.productid,
+                product_id: item.product_id,
                 customer_id: user_id,
             };
             await axios.delete(`http://127.0.0.1:8000/deletecart/${item.cartid}`);

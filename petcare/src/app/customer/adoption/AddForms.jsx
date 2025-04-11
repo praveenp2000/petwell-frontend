@@ -77,7 +77,7 @@ export const AddForms = (_props) => {
     );
 
     if (response?.data === 'Added successfully') {
-      alert('Booked successfully!');
+      alert('Adoption added successfully!');
       _props.getAllAdoptions();
       _props.handleClose();
     } else alert('Cannot Book');
@@ -217,9 +217,6 @@ export const AddForms = (_props) => {
                 variant='outlined'
                 size='small'
               />
-              {validator.isInt(payLoad.age) && (
-                <div className='text-red-500 mt-1 pl-2'>Age required</div>
-              )}
             </div>
           </Box>
 
@@ -336,12 +333,6 @@ export const AddForms = (_props) => {
             <Button
               variant='contained'
               type='submit'
-              disabled={
-                !validator.isEmpty(payLoad.age) ||
-                !validator.isEmpty(payLoad.breed) ||
-                !validator.isEmpty(payLoad.phone) ||
-                !validator.isEmpty(payLoad.color)
-              }
             >
               Save
             </Button>

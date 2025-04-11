@@ -71,7 +71,7 @@ const Page = () => {
   };
 
   return (
-    <>
+    <div className='min-h-[100vh]'>
       <div className='flex justify-between my-auto font-[Poppins] w-full'>
         <h4 className='text-center text-[#ECDFCC]'>Product List</h4>
         <Button
@@ -186,7 +186,7 @@ const Page = () => {
         handleClose={() => setOpenForm(false)}
         formType='product'
       />
-    </>
+    </div>
   );
 };
 
